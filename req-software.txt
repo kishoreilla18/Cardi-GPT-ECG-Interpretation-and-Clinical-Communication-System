@@ -1,0 +1,4 @@
+Python == 3.10.9
+Database == MongoDB
+Code Editor == VSCode
+DB Viewer == MongoDBCompass

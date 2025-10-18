@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <link rel="shortcut icon" href="{% static "images/favicon.png" %}" type="">
+
+  <title> Cardi-GPT </title>
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.css" %}" />
+
+  <!-- fonts style -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <!--owl slider stylesheet -->
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+
+  <!-- font awesome style -->
+  <link href="{% static "css/font-awesome.min.css" %}" rel="stylesheet" />
+
+  <!-- Custom styles for this template -->
+  <link href="{% static "css/style.css" %}" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="{% static "css/responsive.css" %}" rel="stylesheet" />
+
+  <style>
+    
+
+    .sectionclr {
+      padding: 0px 90px 90px 90px;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 60px;
+    }
+
+    .sectionclr h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    .sectionclr p {
+      font-size: 1rem;
+      color: #555;
+      margin-bottom: 40px;
+    }
+
+    .heart-care-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .tips {
+      flex: 1 1 300px;
+      text-align: left;
+      
+    }
+
+    .tips div {
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+    }
+
+    .tips div::after {
+      content: '';
+      flex-grow: 1;
+      border-bottom: 1px solid #000;
+      margin-left: 10px;
+    }
+
+    .image-container {
+      flex: 1 1 300px;
+    }
+
+    .image-container img {
+      max-width: 100%;
+      border-radius: 50%;
+      border: 5px solid #2be280a9;
+    }
+
+    @media(max-width: 768px) {
+      .heart-care-container {
+        flex-direction: column;
+      }
+      .tips {
+        text-align: center;
+      }
+      .tips div::after {
+        margin-left: 5px;
+      }
+    }
+    /* CTA Section */
+  .cta {
+    background: linear-gradient(135deg, #8dc6adff, #62d2a2);
+    color: white;
+    text-align: center;
+    padding: 80px 10%;
+    border-radius: 0;
+  }
+
+  .cta h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+  }
+
+  .cta p {
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+  }
+
+  .cta a {
+    background: white;
+    color: #3ac689ff;
+    padding: 12px 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s ease;
+  }
+
+  .cta a:hover {
+    background: #26c27eff;
+    color: #ffffffff;
+  }
+  </style>
+</head>
+
+<body>
+
+  <div class="hero_area">
+
+    <div class="hero_bg_box">
+      <img src="{% static "images/homeimg.png" %}" alt="">
+    </div>
+
+    <!-- header section strats -->
+    <header class="header_section">
+      <div class="container">
+        <nav class="navbar navbar-expand-lg custom_nav-container ">
+          <a class="navbar-brand" href="{% url "home" %}">
+            <span>
+              Cardi-GPT
+            </span>
+          </a>
+
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class=""> </span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'about' %}"> About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'contact' %}">Contacts</a>
+              </li>
+              
+              <li class="nav-item">
+                <a href="{% url 'signup' %}"><button style="color: green; background-color: white; border: 1px; padding: 8px 16px; cursor: pointer; border-radius: 15px; margin-right: 15px;">Signup</button></a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'login' %}"><button style="color: green; background-color: white; border: 1px; padding: 8px 16px; cursor: pointer; border-radius: 15px;">Login</button></a>
+              </li>
+              
+              
+              
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <!-- end header section -->
+    <!-- slider section -->
+    <section class="slider_section ">
+      <div id="customCarousel1" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="container ">
+              <div class="row">
+                <div class="col-md-7">
+                  <div class="detail-box">
+                    <h1>
+                      ECG Interpretation and Clinical Communication System
+
+                    </h1>
+                    {% comment %} <p>
+                      Explicabo esse amet tempora quibusdam laudantium, laborum eaque magnam fugiat hic? Esse dicta aliquid error repudiandae earum suscipit fugiat molestias, veniam, vel architecto veritatis delectus repellat modi impedit sequi.
+                    </p> {% endcomment %}
+                    <div class="btn-box">
+                      <a href="{% url 'login' %}" class="btn1">
+                        Read More
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item ">
+            <div class="container ">
+              <div class="row">
+                <div class="col-md-7">
+                  <div class="detail-box">
+                    <h1>
+                      From Detection to Decision — Faster Than Ever
+
+                    </h1>
+                    {% comment %} <p>
+                      Explicabo esse amet tempora quibusdam laudantium, laborum eaque magnam fugiat hic? Esse dicta aliquid error repudiandae earum suscipit fugiat molestias, veniam, vel architecto veritatis delectus repellat modi impedit sequi.
+                    </p> {% endcomment %}
+                    <div class="btn-box">
+                      <a href="{% url 'login' %}" class="btn1">
+                        Read More
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="container ">
+              <div class="row">
+                <div class="col-md-7">
+                  <div class="detail-box">
+                    <h1>
+                      Empowering Patients with Clarity
+
+                    </h1>
+                    {% comment %} <p>
+                      Explicabo esse amet tempora quibusdam laudantium, laborum eaque magnam fugiat hic? Esse dicta aliquid error repudiandae earum suscipit fugiat molestias, veniam, vel architecto veritatis delectus repellat modi impedit sequi.
+                    </p> {% endcomment %}
+                    <div class="btn-box">
+                      <a href="{% url 'login' %}" class="btn1">
+                        Read More
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ol class="carousel-indicators">
+          <li data-target="#customCarousel1" data-slide-to="0" class="active"></li>
+          <li data-target="#customCarousel1" data-slide-to="1"></li>
+          <li data-target="#customCarousel1" data-slide-to="2"></li>
+        </ol>
+      </div>
+
+    </section>
+    <!-- end slider section -->
+  </div>
+
+
+  <!-- department section -->
+
+  <section class="department_section layout_padding">
+    <div class="department_container">
+      <div class="container ">
+        <div class="heading_container heading_center">
+          <h2>
+            Our Departments
+          </h2>
+          <p>
+            We provide comprehensive healthcare services, from expert heart care and accurate diagnosis to detailed medical reports and effective remedies, ensuring complete support for your well-being.
+          </p>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <div class="box ">
+              <div class="img-box">
+                <img src="{% static "images/s1.png" %}" alt="">
+              </div>
+              <div class="detail-box">
+                <h5>
+                  Cardiology
+                </h5>
+                <p>
+                  Expert care for heart health, focusing on prevention, diagnosis, and treatment of cardiovascular diseases.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="box ">
+              <div class="img-box">
+                <img src="{% static "images/s2.png" %}" alt="">
+              </div>
+              <div class="detail-box">
+                <h5>
+                  Diagnosis
+                </h5>
+                <p>
+                  Advanced tests and screenings to detect health conditions early and ensure accurate treatment.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="box ">
+              <div class="img-box">
+                <img src="{% static "images/s3.png" %}" alt="">
+              </div>
+              <div class="detail-box">
+                <h5>
+                  Reports
+                </h5>
+                <p>
+                  Clear and detailed medical reports to track your health progress and guide better care decisions.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="box ">
+              <div class="img-box">
+                <img src="{% static "images/s4.png" %}" alt="">
+              </div>
+              <div class="detail-box">
+                <h5>
+                  First Aid
+                </h5>
+                <p>
+                  Effective treatments and lifestyle guidance to support recovery and long-term wellness.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="btn-box">
+          <a href="">
+            View All
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- end department section -->
+
+<section class="sectionclr">
+    <div class="heading_container heading_center">
+          <h2>
+            Heart Care Tips
+          </h2>
+          <p>
+            Follow these simple steps to maintain a healthy heart and prevent cardiovascular diseases.
+          </p>
+        </div>
+
+    <div class="heart-care-container">
+        <div class="tips">
+          <h1 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; font-size: 40px;">-Maintain a balanced diet</h1>
+          <h1 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; font-size: 40px;">-Exercise regularly</h1>
+          <h1 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; font-size: 40px;">-Avoid smoking and alcohol</h1>
+        </div>
+      <div class="image-container">
+        <img src="https://img.freepik.com/premium-vector/female-doctor-cardiologist-examining-human-heart-with-stethoscope-flat-vector-illustration-cardiology-heart-diseases-medicine-health-care_103044-1260.jpg" alt="Heart Care">
+      </div>
+    </div>
+  </section>
+  
+  <!-- doctor section -->
+
+  {% comment %} <section class="doctor_section layout_padding">
+    <div class="container">
+      <div class="heading_container heading_center">
+        <h2>
+          Our Doctors
+        </h2>
+        <p class="col-md-10 mx-auto px-0">
+          Incilint sapiente illo quo praesentium officiis laudantium nostrum, ad adipisci cupiditate sit, quisquam aliquid. Officiis laudantium fuga ad voluptas aspernatur error fugiat quos facilis saepe quas fugit, beatae id quisquam.
+        </p>
+      </div>
+      <div class="row">
+        <div class="col-sm-6 col-lg-4 mx-auto">
+          <div class="box">
+            <div class="img-box">
+              <img src="{% static "images/d1.jpg" %}" alt="">
+            </div>
+            <div class="detail-box">
+              <div class="social_box">
+                <a href="">
+                  <i class="fa fa-facebook" aria-hidden="true"></i>
+                </a>
+                <a href="">
+                  <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+                <a href="">
+                  <i class="fa fa-youtube" aria-hidden="true"></i>
+                </a>
+                <a href="">
+                  <i class="fa fa-linkedin" aria-hidden="true"></i>
+                </a>
+              </div>
+              <h5>
+                Elina Josh
+              </h5>
+              <h6 class="">
+                Doctor
+              </h6>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-4 mx-auto">
+          <div class="box">
+            <div class="img-box">
+              <img src="{% static "images/d2.jpg" %}" alt="">
+            </div>
+            <div class="detail-box">
+              <div class="social_box">
+                <a href="">
+                  <i class="fa fa-facebook" aria-hidden="true"></i>
+                </a>
+                <a href="">
+                  <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+                <a href="">
+                  <i class="fa fa-youtube" aria-hidden="true"></i>
+                </a>
+                <a href="">
+                  <i class="fa fa-linkedin" aria-hidden="true"></i>
+                </a>
+              </div>
+              <h5>
+                Adam View
+              </h5>
+              <h6 class="">
+                Doctor
+              </h6>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-4 mx-auto">
+          <div class="box">
+            <div class="img-box">
+              <img src="{% static "images/d3.jpg" %}" alt="">
+            </div>
+            <div class="detail-box">
+              <div class="social_box">
+                <a href="">
+                  <i class="fa fa-facebook" aria-hidden="true"></i>
+                </a>
+                <a href="">
+                  <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+                <a href="">
+                  <i class="fa fa-youtube" aria-hidden="true"></i>
+                </a>
+                <a href="">
+                  <i class="fa fa-linkedin" aria-hidden="true"></i>
+                </a>
+              </div>
+              <h5>
+                Mia Mike
+              </h5>
+              <h6 class="">
+                Doctor
+              </h6>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="btn-box">
+        <a href="">
+          View All
+        </a>
+      </div>
+    </div>
+  </section> {% endcomment %}
+
+  <!-- end doctor section -->
+
+  <!-- New CTA Section -->
+  <section class="cta">
+    <h2>Start Your Heart Health Journey with Cardi-GPT</h2>
+    <p>Experience smarter ECG interpretation powered by AI and backed by science.</p>
+    <a href="{% url 'login' %}" >Try Now</a>
+  </section>
+
+  <!-- footer section -->
+  <footer class="footer_section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-lg-3 footer_col">
+          <div class="footer_contact">
+            <h2 style="color: whitesmoke;">
+              Cardi-GPT
+            </h2>
+            <div class="contact_link_box">
+              <a href="https://maps.app.goo.gl/XcxZbzXfEUqohFpq7">
+                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                <span>
+                  Location
+                </span>
+              </a>
+              <a href="">
+                <i class="fa fa-phone" aria-hidden="true"></i>
+                <span>
+                  Call +91 8555887986
+                </span>
+              </a>
+              <a href="">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <span>
+                  info@codebook.in
+                </span>
+              </a>
+            </div>
+          </div>
+          <div class="footer_social">
+            <a href="">
+              <i class="fa fa-facebook" aria-hidden="true"></i>
+            </a>
+            <a href="">
+              <i class="fa fa-twitter" aria-hidden="true"></i>
+            </a>
+            <a href="">
+              <i class="fa fa-linkedin" aria-hidden="true"></i>
+            </a>
+            <a href="">
+              <i class="fa fa-instagram" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-2 mx-auto footer_col">
+          <div class="footer_link_box">
+            <h4>
+              Links
+            </h4>
+            <div class="footer_links">
+              <a class="active" href="{% url 'home' %}">
+                Home
+              </a>
+              <a class="" href="{% url 'about' %}">
+                About
+              </a>
+              <a class="" href="#">
+                Departments
+              </a>
+              <a class="" href="#">
+                Doctors
+              </a>
+              <a class="" href="{% url 'contact' %}">
+                Contact Us
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-2 mx-auto footer_col">
+          <div class="footer_link_box">
+            <h4>
+              Categories
+            </h4>
+            <div class="footer_links">
+              <a class="active" href="#">
+                AI Chatbot
+              </a>
+              <a class="" href="">
+                ECG Analysis
+              </a>
+              <a class="" href="#">
+                Reports
+              </a>
+              
+              <a class="" href="#">
+                How It Works
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 footer_col">
+          <div class="footer_detail" style="width: 350px;">
+            <h4>
+              About
+            </h4>
+            <p>
+              CardiGPT is an AI-powered healthcare assistant that provides quick ECG interpretations, real-time cardiac insights, and intelligent chatbot support for patients and healthcare professionals. It uses deep learning models to analyze ECG data, detect abnormalities.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="footer-info">
+        <p>
+          &copy; <span id="displayYear"></span> All Rights Reserved By
+          <a href="https://html.design/">Codebook<br><br></a>
+            
+        </p>
+       
+      </div>  
+    </div>
+  </footer>
+  <!-- footer section -->
+
+  <!-- jQery -->
+  <script type="text/javascript" src="{% static "js/jquery-3.4.1.min.js" %}"></script>
+  <!-- popper js -->
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+  </script>
+  <!-- bootstrap js -->
+  <script type="text/javascript" src="{% static "js/bootstrap.js" %}"></script>
+  <!-- owl slider -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
+  </script>
+  <!-- custom js -->
+  <script type="text/javascript" src="{% static "js/custom.js" %}"></script>
+  <!-- Google Map -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap">
+  </script>
+  <!-- End Google Map -->
+
+</body>
+
+</html>

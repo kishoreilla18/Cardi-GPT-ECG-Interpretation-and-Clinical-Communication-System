@@ -1,0 +1,209 @@
+{% extends 'user/base.html' %}
+
+{% block content %}
+    <style>
+      body {
+        background-color: #f3f9f7;
+         /* height of navbar */
+        overflow: hidden;   /* prevent body scrolling */
+      }
+      
+
+      .sidebar {
+        background-color: #3fa77aff;
+        
+        
+        color: white;
+        padding-top: 20px;
+        position: fixed;
+        
+        left: 0;
+        width: 250px;
+        overflow-y: auto;
+        min-height: calc(100vh - 78px); /* account for navbar */
+        top: 78px; /* position below navbar */
+
+      }
+
+      .category-link {
+        color: white;
+        display: block;
+        padding: 10px;
+        border-radius: 10px;
+        text-decoration: none;
+      }
+
+      .category-link:hover {
+        background-color: #4cb888;
+      }
+
+      .main-content {
+        margin-left: 270px;
+        padding: 20px;
+        overflow-y: auto;
+        max-height: 100vh;
+        height: calc(100vh - 78px); /* viewport minus navbar */
+        
+      }
+
+      .question-card {
+        background: white;
+        border-left: 5px solid #62d2a2;
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 15px;
+      }
+
+      .btn-primary {
+        background-color: #62d2a2;
+        border: none;
+      }
+
+      .btn-primary:hover {
+        background-color: #4cb888;
+      }
+
+      .answer-heading {
+        font-weight: 600;
+        margin-top: 10px;
+        color: #10613eff;
+      }
+
+      .question-heading {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: #000000ff;
+      }
+    </style>
+
+
+    <div class="sidebar">
+      <h4 class="text-center mb-3">CardiGPT Community</h4>
+      {% comment %} {% for cat in categories %}
+        <a href="{% url 'community_home' %}" class="category-link {% if selected_category == cat %}fw-bold{% endif %}">{{ cat }}</a>
+      {% endfor %} {% endcomment %}
+      <a href="{% url 'community_home' %}" class="btn btn-primary" style="margin-left: 30px; color: white;">Back to Community</a>
+    </div>
+
+    <div class="main-content">
+      <h3 class="text-success">🫀 CardiGPT Community Chat</h3>
+
+
+      {% comment %} <!-- Questions -->
+      {% if selected_category %}
+        <h5 class="text-success mb-3">Questions in "{{ selected_category }}"</h5>
+        {% for question in questions %}
+          <div class="question-card">
+            <p class="question-heading">Q: {{ question.question }}</p>
+
+            <!-- Answers -->
+            <div>
+              <p class="answer-heading">Answers:</p>
+              {% if question.answers %}
+                <ul class="list-group list-group-flush">
+                  {% for a in question.answers %}
+                    <li class="list-group-item">
+                      {{ a.text }}
+                      <br />
+                      <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                        <small class="text-muted">Answered by: {{ a.answered_by }} on {{ a.time|date:'d M Y, h:i A' }}</small>
+                        <small class="text-muted" style="font-size: 16px;"> 
+                          {% if a.sentiment == 'very positive' %}
+                    {{a.sentiment}}:😍
+                    {% elif a.sentiment == 'positive' %}
+                    {{a.sentiment}}:🙂
+                    {% elif a.sentiment == 'neutral' %}
+                    {{a.sentiment}}:😐
+                    {% elif a.sentiment == 'negative' %}
+                    {{a.sentiment}}:😮
+                    {% elif a.sentiment == 'very negative' %}
+                    {{a.sentiment}}:😡
+                    {% else %}
+                    ➖
+                    {% endif %}
+                        </small>
+                      </div>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% else %}
+                <p class="text-muted">No answers yet.</p>
+              {% endif %}
+            </div>
+
+            <!-- Add Answer -->
+            <form method="POST" action="{% url 'post_answer' question.id %}" class="mt-2">
+              {% csrf_token %}
+              <textarea name="answer_text" class="form-control" placeholder="Write your answer..."></textarea>
+              <button type="submit" class="btn btn-primary btn-sm mt-1">Post Answer</button>
+            </form>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p class="text-muted mt-4">Select a category to view related questions.</p>
+      {% endif %} {% endcomment %}
+
+      <!-- User Questions -->
+    <div class="card mb-5 shadow-sm">
+        <div class="card-header bg- text-white" style="background-color: #4cb888;">
+            <h4><i class="fa-solid fa-question-circle"></i> My Questions</h4>
+        </div>
+        <div class="card-body">
+            {% if user_questions %}
+                <ul class="list-group">
+                    {% for q in user_questions %}
+                        <li class="list-group-item">
+                            <strong>{{ q.category }}</strong><br>
+                            {{ q.question }}<br>
+                            <small class="text-muted">Posted on: {{ q.timestamp }}</small>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-muted">You haven’t posted any questions yet.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- User Answers -->
+    <div class="card shadow-sm">
+        <div class="card-header bg- text-white" style="background-color: #4cb888;">
+            <h4><i class="fa-solid fa-comments"></i>Answers</h4>
+        </div>
+        <div class="card-body">
+            {% if user_answers %}
+                <ul class="list-group">
+                    {% for ans in user_answers %}
+                        <li class="list-group-item">
+                            <strong>Question:</strong> {{ ans.question_text }} <br>
+                            <strong>User Answer:</strong> {{ ans.answer_text }} <br>
+                            <small class="text-muted">Category: {{ ans.category }} | Time: {{ ans.time }}</small>
+                            <small class="text-muted" style="float: right;">Sentiment: 
+                                {% if ans.sentiment == 'very positive' %}
+                    {{ans.sentiment}}:😍
+                    {% elif ans.sentiment == 'positive' %}
+                    {{ans.sentiment}}:🙂
+                    {% elif ans.sentiment == 'neutral' %}
+                    {{ans.sentiment}}:😐
+                    {% elif ans.sentiment == 'negative' %}
+                    {{ans.sentiment}}:😮
+                    {% elif ans.sentiment == 'very negative' %}
+                    {{ans.sentiment}}:😡
+                    {% else %}
+                    ➖
+                    {% endif %}
+                            </small><br>
+                            <small class="">Answered By: {{ ans.answered_by }}</small>
+                        </li>
+                        
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-muted">You haven’t answered any questions yet.</p>
+            {% endif %}
+        </div>
+    </div>
+    </div>
+
+{% endblock content %}

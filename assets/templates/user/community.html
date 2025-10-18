@@ -1,0 +1,168 @@
+{% extends 'user/base.html' %}
+
+{% block content %}
+    <style>
+      body {
+        background-color: #f3f9f7;
+         /* height of navbar */
+        overflow: hidden;   /* prevent body scrolling */
+      }
+      
+
+      .sidebar {
+        background-color: #3fa77aff;
+        
+        
+        color: white;
+        padding-top: 20px;
+        position: fixed;
+        
+        left: 0;
+        width: 250px;
+        overflow-y: auto;
+        min-height: calc(100vh - 78px); /* account for navbar */
+        top: 78px; /* position below navbar */
+
+      }
+
+      .category-link {
+        color: white;
+        display: block;
+        padding: 10px;
+        border-radius: 10px;
+        text-decoration: none;
+      }
+
+      .category-link:hover {
+        background-color: #4cb888;
+      }
+
+      .main-content {
+        margin-left: 270px;
+        padding: 20px;
+        overflow-y: auto;
+        max-height: 100vh;
+        height: calc(100vh - 78px); /* viewport minus navbar */
+        
+      }
+
+      .question-card {
+        background: white;
+        border-left: 5px solid #62d2a2;
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 15px;
+      }
+
+      .btn1-primary {
+        background-color: #62d2a2;
+        border: none;
+      }
+
+      .btn1-primary:hover {
+        background-color: #4cb888;
+      }
+
+      .answer-heading {
+        font-weight: 600;
+        margin-top: 10px;
+        color: #10613eff;
+      }
+
+      .question-heading {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: #000000ff;
+      }
+    </style>
+
+
+    <div class="sidebar">
+      <h4 class="text-center mb-3">Questions Categories</h4>
+      {% for cat in categories %}
+        <a href="?category={{ cat }}" class="category-link {% if selected_category == cat %}fw-bold{% endif %}">{{ cat }}</a>
+      {% endfor %}
+    </div>
+
+    <div class="main-content">
+      <h3 class="text-success">🫀 CardiGPT Community Chat</h3>
+
+      <!-- Post Question -->
+      <div class="card shadow-sm p-3 mt-3 mb-4">
+        <h5 class="text-success">Ask a New Question</h5>
+        <form method="POST" action="{% url 'post_question' %}">
+          {% csrf_token %}
+          <div class="row mb-2">
+            <div class="col-md-6">
+              <label>Select Category:</label>
+              <select name="category" class="form-control" required>
+                <option value="">-- Choose Category --</option>
+                {% for cat in categories %}
+                  <option value="{{ cat }}">{{ cat }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <textarea name="question" class="form-control mb-2" rows="3" placeholder="Type your heart health question..." required></textarea>
+          <button class="btn btn1-primary">Post Question</button>
+          <a href="{% url 'my_post' %}" class="btn btn1-primary" style="float: right; color: white;">My Post</a>
+        </form>
+      </div>
+
+      <!-- Questions -->
+      {% if selected_category %}
+        <h5 class="text-success mb-3">Questions in "{{ selected_category }}"</h5>
+        {% for question in questions %}
+          <div class="question-card">
+            <p class="question-heading">Q: {{ question.question }}</p>
+
+            <!-- Answers -->
+            <div>
+              <p class="answer-heading">Answers:</p>
+              {% if question.answers %}
+                <ul class="list-group list-group-flush">
+                  {% for a in question.answers %}
+                    <li class="list-group-item">
+                      {{ a.text }}
+                      <br />
+                      <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                        <small class="text-muted">Answered by: {{ a.answered_by }} on {{ a.time|date:'d M Y, h:i A' }}</small>
+                        <small class="text-muted" style="font-size: 16px;"> 
+                          {% if a.sentiment == 'very positive' %}
+                    {{a.sentiment}}:😍
+                    {% elif a.sentiment == 'positive' %}
+                    {{a.sentiment}}:🙂
+                    {% elif a.sentiment == 'neutral' %}
+                    {{a.sentiment}}:😐
+                    {% elif a.sentiment == 'negative' %}
+                    {{a.sentiment}}:😮
+                    {% elif a.sentiment == 'very negative' %}
+                    {{a.sentiment}}:😡
+                    {% else %}
+                    ➖
+                    {% endif %}
+                        </small>
+                      </div>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% else %}
+                <p class="text-muted">No answers yet.</p>
+              {% endif %}
+            </div>
+
+            <!-- Add Answer -->
+            <form method="POST" action="{% url 'post_answer' question.id %}" class="mt-2">
+              {% csrf_token %}
+              <textarea name="answer_text" class="form-control" placeholder="Write your answer..." required></textarea>
+              <button type="submit" class="btn btn1-primary btn-sm mt-1">Post Answer</button>
+            </form>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p class="text-muted mt-4">Select a category to view related questions.</p>
+      {% endif %}
+    </div>
+
+{% endblock content %}

@@ -1,0 +1,147 @@
+{% extends 'user/base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+  .report-container {
+    padding: 40px 10%;
+    background-color: #f8f9fa;
+  }
+
+  .report-container h2 {
+    text-align: center;
+    color: #62d2a2;
+    margin-bottom: 40px;
+    font-weight: 700;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+
+  thead {
+    background: #62d2a2;
+    color: white;
+  }
+
+  th, td {
+    padding: 15px 20px;
+    text-align: center;
+    font-size: 1rem;
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: #f2f6f9;
+  }
+
+  tbody tr:hover {
+    background-color: #e3f2fd;
+    transition: 0.3s ease;
+  }
+
+  .accuracy {
+    font-weight: 600;
+    color: #000000ff;
+  }
+
+  .no-data {
+    text-align: center;
+    padding: 40px;
+    font-size: 1.2rem;
+    color: #555;
+  }
+  .breadcrumb-section {
+      position: relative;
+      background: url('{% static "images/breadcrumb1.jpg" %}') center/cover no-repeat;
+      padding: 80px 20px;
+      color: #fff;
+    }
+    
+    .breadcrumb-section .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.4); /* dark overlay */
+    }
+    
+    .breadcrumb-section .container {
+      position: relative;
+      z-index: 2;
+      text-align: left;
+    }
+    
+    .breadcrumb-title {
+      font-size: 3rem;
+      font-weight: 700;
+      margin: 0 0 10px;
+    }
+    
+    .breadcrumb-nav {
+      font-size: 1.2rem;
+    }
+    
+    .breadcrumb-nav a {
+      color: #fff;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    
+    .breadcrumb-nav .divider {
+      margin: 0 8px;
+      color: #ddd;
+    }
+    
+    .breadcrumb-nav span {
+      color: #ddd;
+    }
+</style>
+  <section class="breadcrumb-section">
+    <div class="overlay"></div>
+    <div class="container">
+      <h1 class="breadcrumb-title">Reports</h1>
+      <nav class="breadcrumb-nav">
+        <a href="{% url 'user_dashboard' %}">Dashboard</a> <span class="divider">»</span> <span>Reports</span>
+      </nav>
+    </div>
+  </section>
+<div class="report-container">
+  <h2>Your ECG Prediction Reports</h2>
+
+  {% if reports %}
+  <table>
+    <thead>
+      <tr>
+        <th>S.No</th>
+        <th>Predicted Result</th>
+        <th>Model Name</th>
+        <th>Model Accuracy (%)</th>
+        <th>Created At</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for report in reports %}
+      <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ report.predicted_result }}</td>
+        <td>{{ report.model_name }}</td>
+        <td class="accuracy">{{ report.model_accuracy }}</td>
+        <td>{{ report.created_at|date:"Y-m-d H:i" }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+    <div class="no-data">
+      <p>No reports found yet. Run an ECG analysis to generate one!</p>
+    </div>
+  {% endif %}
+</div>
+
+{% endblock content %}

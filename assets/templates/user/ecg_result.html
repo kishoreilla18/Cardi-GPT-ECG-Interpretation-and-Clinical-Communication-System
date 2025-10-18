@@ -1,0 +1,504 @@
+{% extends 'user/base.html' %}
+{% load static %}
+{% block content %}
+<script src="https://kit.fontawesome.com/1ad2811ffc.js" crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --ecg-primary: #27cf86ff;
+            --ecg-primary-light: #e8f4ff;
+            --ecg-secondary: #2e7d32;
+            --ecg-danger: #d32f2f;
+            --ecg-warning: #f57c00;
+            --ecg-text: #1c1c1cff;
+            --ecg-text-light: #666;
+            --ecg-background: #f4f6f9;
+            --ecg-white: #ffffff;
+            --ecg-border-radius: 12px;
+            --ecg-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            --ecg-transition: all 0.3s ease;
+        }
+        
+        .ecg-body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--ecg-background);
+            color: var(--ecg-text);
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .ecg-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            background: var(--ecg-white);
+            border-radius: var(--ecg-border-radius);
+            box-shadow: var(--ecg-shadow);
+            overflow: hidden;
+        }
+        
+        .ecg-header {
+            background: linear-gradient(135deg, var(--ecg-primary), #5fb490ff);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .ecg-header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .ecg-header p {
+            opacity: 0.9;
+            font-size: 16px;
+        }
+        
+        .ecg-status-indicator {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .ecg-content {
+            padding: 30px;
+        }
+        
+        .ecg-section {
+            margin-bottom: 30px;
+            border-radius: var(--ecg-border-radius);
+            overflow: hidden;
+            border: 1px solid #eaeaea;
+        }
+        
+        .ecg-section-header {
+            background: var(--ecg-primary-light);
+            padding: 15px 20px;
+            border-bottom: 1px solid #d0e8ff;
+            display: flex;
+            align-items: center;
+        }
+        
+        .ecg-section-header h3 {
+            color: var(--ecg-primary);
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .ecg-section-icon {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        
+        .ecg-section-body {
+            padding: 20px;
+        }
+        
+        .ecg-patient-summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+            gap: 10px;
+        }
+        
+        .ecg-summary-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .ecg-summary-label {
+            font-size: 14px;
+            color: var(--ecg-text-light);
+            margin-bottom: 5px;
+        }
+        
+        .ecg-summary-value {
+            font-weight: 500;
+            font-size: 16px;
+        }
+        
+        .ecg-result-card {
+            background: var(--ecg-primary-light);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        
+       .ecg-result-title {
+    font-size: 26px;
+    font-weight: 750;
+    color: #db5254; /* matches your Cardi-GPT theme */
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 20px;
+    position: relative;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Add a subtle underline accent */
+.ecg-result-title::after {
+    content: "";
+    display: block;
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(to right, #db5254, #ff7878);
+    margin: 8px auto 0;
+    border-radius: 2px;
+}
+
+        
+        .ecg-explanation {
+            color: var(--ecg-text);
+            line-height: 1.6;
+        }
+        
+        .ecg-recommendation {
+            background: #f0f9ff;
+            border-left: 4px solid var(--ecg-primary);
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .ecg-health-tips {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .ecg-tip-card {
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .ecg-tip-icon {
+            color: var(--ecg-secondary);
+            margin-right: 10px;
+            font-size: 18px;
+            margin-top: 2px;
+        }
+        
+        .ecg-footer {
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid #eaeaea;
+            color: var(--ecg-text-light);
+            font-size: 14px;
+        }
+        .detect-btn {
+        padding: 10px 20px;
+        background: #62d2a2;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        }
+
+        .detect-btn:hover {
+        background: #8dd2b4ff;
+        }
+        @media (max-width: 600px) {
+            .ecg-container {
+                margin: 10px;
+            }
+            
+            .ecg-header {
+                padding: 20px;
+            }
+            
+            .ecg-content {
+                padding: 20px;
+            }
+            
+            .ecg-patient-summary-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .ecg-health-tips {
+                grid-template-columns: 1fr;
+            }
+            }
+            .doctor_section .box .img-box {
+            width: 60%;
+            margin-left: 50px;
+            }
+
+            .doctor_section .box .img-box img {
+            width: 100%;
+            }
+
+            .doctor_section .box .detail-box {
+            width: 100%;
+            padding: 25px 15px;
+            text-align: center;
+            position: relative;
+            }
+
+            .doctor_section .box .detail-box .social_box {
+            position: absolute;
+            z-index: 2;
+            left: 50%;
+            top: 150%;
+            -webkit-transform: translate(-50%, -50%);
+                    transform: translate(-50%, -50%);
+            
+            padding: 10px;
+            border-radius: 5px;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            opacity: 0;
+            -webkit-transition: all .3s;
+            transition: all .3s;
+            }
+
+            .doctor_section .box .detail-box .social_box a {
+            color: #62d2a2;
+            margin: 0 10px;
+            }
+
+            .doctor_section .box .detail-box .social_box a:hover {
+            color: #1fab89;
+            }
+
+            .doctor_section .box:hover .social_box {
+            top: 0;
+            opacity: 1;
+            }
+
+            .doctor_section .btn-box {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                    justify-content: center;
+            margin-top: 45px;
+            }
+
+            .doctor_section .btn-box a {
+            display: inline-block;
+            padding: 10px 45px;
+            background-color: #1fab89;
+            color: #ffffff;
+            border-radius: 5px;
+            -webkit-transition: all 0.3s;
+            transition: all 0.3s;
+            border: 1px solid #1fab89;
+            }
+
+            .doctor_section .btn-box a:hover {
+            background-color: transparent;
+            color: #1fab89;
+            }
+    </style>
+
+    <div class="ecg-container ecg-body">
+        <div class="ecg-header">
+            <h1>ECG Interpretation Result</h1>
+            <p>Detailed analysis of your electrocardiogram</p>
+            <div class="ecg-status-indicator">Report Generated</div>
+        </div>
+        
+        <div class="ecg-content">
+            <div class="ecg-section">
+                <div class="ecg-section-header">
+                    <span class="ecg-section-icon">👤</span>
+                    <h3>Patient Summary</h3>
+                </div>
+                <div class="ecg-section-body">
+                    <div class="ecg-patient-summary-grid">
+                        <div class="ecg-summary-item">
+                            <span class="ecg-summary-label">Age</span>
+                            <span class="ecg-summary-value">{{ result.patient_summary.age }}</span>
+                        </div>
+                        <div class="ecg-summary-item">
+                            <span class="ecg-summary-label">Chest Pain</span>
+                            <span class="ecg-summary-value">{{ result.patient_summary.chest_pain }}</span>
+                        </div>
+                        <div class="ecg-summary-item">
+                            <span class="ecg-summary-label">Shortness of Breath</span>
+                            <span class="ecg-summary-value">{{ result.patient_summary.shortness_of_breath }}</span>
+                        </div>
+                        <div class="ecg-summary-item">
+                            <span class="ecg-summary-label">Heart Beating Fast</span>
+                            <span class="ecg-summary-value">{{ result.patient_summary.heart_beating_fast }}</span>
+                        </div>
+                        <div class="ecg-summary-item">
+                            <span class="ecg-summary-label">Swelling</span>
+                            <span class="ecg-summary-value">{{ result.patient_summary.swelling }}</span>
+                        </div>
+                        <div class="ecg-summary-item">
+                            <span class="ecg-summary-label">Family History</span>
+                            <span class="ecg-summary-value">{{ result.patient_summary.family_history }}</span>
+                        </div>
+                        <div class="ecg-summary-item">
+                            <span class="ecg-summary-label">Sweating</span>
+                            <span class="ecg-summary-value">{{ result.patient_summary.sweating }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ecg-section">
+                <div class="ecg-section-header">
+                    <span class="ecg-section-icon">📊</span>
+                    <h3>Result</h3>
+                </div>
+                <div class="ecg-section-body">
+                    <div class="ecg-result-card">
+                        <div class="ecg-result-title"> {{ result.ecg_interpretation.result }}</div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="ecg-section">
+                <div class="ecg-section-header">
+                    <span class="ecg-section-icon"></span>
+                    <h3>Explanation</h3>
+                </div>
+                <div class="ecg-section-body">
+                    <div class="ecg-result-card">
+                       
+                        <div class="ecg-explanation">{{ result.ecg_interpretation.explanation }}</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ecg-section">
+                <div class="ecg-section-header">
+                    <span class="ecg-section-icon">💡</span>
+                    <h3>Recommendation</h3>
+                </div>
+                <div class="ecg-section-body">
+                    <div class="ecg-recommendation">
+                        {{ result.recommendation }}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ecg-section">
+                <div class="ecg-section-header">
+                    <span class="ecg-section-icon">❤️</span>
+                    <h3>Health Tips</h3>
+                </div>
+                <div class="ecg-section-body">
+                    <div class="ecg-health-tips">
+                        {% for tip in result.health_tips %}
+                        <div class="ecg-tip-card">
+                            <span class="ecg-tip-icon">✓</span>
+                            <span>{{ tip }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- doctor section -->
+
+  <section class="doctor_section layout_padding">
+    <div class="container">
+      <div class="heading_container heading_center">
+        <h2>
+          Recommend a Doctor
+        </h2>
+        {% comment %} <p class="col-md-10 mx-auto px-0">
+          Incilint sapiente illo quo praesentium officiis laudantium nostrum, ad adipisci cupiditate sit, quisquam aliquid. Officiis laudantium fuga ad voluptas aspernatur error fugiat quos facilis saepe quas fugit, beatae id quisquam.
+        </p> {% endcomment %}
+      </div>
+      <div class="row">
+        <div class="col-sm-6 col-lg-4 mx-auto" style="width: 60%;">
+          <div class="box">
+            <div class="img-box">
+              <img src="https://imagesx.practo.com/providers/dr-venkata-vijay-cardiologist-hyderabad-1f820de1-d2bd-4994-b16a-8eb685f7ddb0.jpg?i_type=t_70x70-2x-webp" alt="" style="padding: 25px;">
+            </div>
+            <div class="detail-box">
+              
+              <h5>
+                Dr. Venkata Vijay
+              </h5>
+              <h6 class="">
+                Cardio Thoracic Surgeon
+              </h6>
+              <p class="location" style="padding: 0px 10px 0px 10px;">
+                          <i class="fas fa-map-marker-alt" ></i>
+                          Virinchi Hospitals, Banjara Hills, Hyderabad
+                      </p>
+                      <p class="phone">
+                          <i class="fas fa-phone"></i> +91 4049170737
+                      </p>
+                <a href="https://www.practo.com/hyderabad/doctor/dr-venkata-vijay-cardiologist?practice_id=1138784&specialization=Cardiologist&referrer=doctor_listing&page_uid=f7b32386-6ca4-4791-a6e3-6e83fc7bfbc2"><button class="detect-btn">Book Appointment</button></a>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-4 mx-auto">
+          <div class="box">
+            <div class="img-box">
+              <img src="https://imagesx.practo.com/providers/dr-anil-krishna-gundala-interventional-cardiologist-hyderabad-63ca3112-04c4-42f2-ad47-7b49b016175b.jpg?i_type=t_70x70-2x-webp" alt="" style="padding: 30px;">
+            </div>
+            <div class="detail-box">
+              
+              <h5>
+                Dr. Anil Krishna
+              </h5>
+              <h6 class="">
+                Cardiologist specialist Surgeon
+              </h6>
+              <p class="location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    Medicover Hospitals - Hitech City, Hyderabad
+                </p>
+                <p class="phone">
+                    <i class="fas fa-phone"></i>
+                    +91 4049172964
+                </p>
+                <a href="https://www.practo.com/hyderabad/doctor/dr-anil-krishnagundala-cardiologist?practice_id=1154495&specialization=Cardiologist&referrer=doctor_listing&page_uid=f7b32386-6ca4-4791-a6e3-6e83fc7bfbc2"><button class="detect-btn">Book Appointment</button></a>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-4 mx-auto">
+          <div class="box">
+            <div class="img-box">
+              <img src="https://imagesx.practo.com/providers/dr-krishna-prasad-a-r-cardiothoracic-surgeon-hyderabad-9684f790-1e70-41ff-84be-74364f61cdf2.jpg?i_type=t_70x70-2x-webp" alt="" style="padding: 28px;">
+            </div>
+            <div class="detail-box">
+              
+              <h5>
+                Dr. Krishna Prasad
+              </h5>
+              <h6 class="">
+                Cardiothoracic Surgeon
+              </h6>
+              <p class="location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    Medicover Hospitals - Hitech City, Hyderabad
+                </p>
+                <p class="phone">
+                    <i class="fas fa-phone"></i>
+                    +91 4048213517
+                </p>
+                <a href="https://www.practo.com/hyderabad/doctor/dr-rajeshwara-krishna-prasad-adluri-cardiac-surgeon?practice_id=1154495&specialization=Cardiologist&referrer=doctor_listing&page_uid=f7b32386-6ca4-4791-a6e3-6e83fc7bfbc2"><button class="detect-btn">Book Appointment</button></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- end doctor section -->
+        <div class="ecg-footer">
+            <p>This report is generated for informational purposes only. Please consult with a healthcare professional for medical advice.</p>
+        </div>
+    </div>
+{% endblock content %}

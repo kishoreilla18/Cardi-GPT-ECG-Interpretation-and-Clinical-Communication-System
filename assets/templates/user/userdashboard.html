@@ -1,0 +1,167 @@
+{% extends 'user/base.html' %}
+{% load static %}
+
+{% block content %}
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=BBH+Sans+Hegarty&family=Caprasimo&display=swap');
+  </style>
+  <style>
+    /* How It Works Section */
+  .how-it-works {
+    background: #ffffffff;
+    padding: 80px 10%;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+    text-align: center;
+  }
+
+  .step-box {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  }
+
+  .step-box i {
+    font-size: 2rem;
+    color: #62d2a2;
+    margin-bottom: 10px;
+  }
+
+  /* CTA Section */
+  .cta {
+    background: linear-gradient(135deg, #8dc6adff, #62d2a2);
+    color: white;
+    text-align: center;
+    padding: 80px 10%;
+    border-radius: 0;
+  }
+
+  .cta h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+  }
+
+  .cta p {
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+  }
+
+  .cta a {
+    background: white;
+    color: #3ac689ff;
+    padding: 12px 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s ease;
+  }
+
+  .cta a:hover {
+    background: #26c27eff;
+    color: #ffffffff;
+  }
+  /* Chatbot position fix */
+df-messenger {
+  position: fixed;
+  bottom: 50px;
+  right: 40px;
+  z-index: 9999; /* Keeps chatbot below navbar but above content */
+}
+df-messenger {
+    --df-messenger-bot-message: #91c0ac80;       /* Bot message bubble */
+    --df-messenger-user-message: #27ba73ab;      /* User message bubble */
+    --df-messenger-font-color: #000000;        /* Text color */
+    --df-messenger-chat-background-color: #ffffff; /* Chat background */
+    --df-messenger-button-titlebar-color: #23a26bff; /* Header color */
+    --df-messenger-send-icon: #21ac70ff;        /* Send icon color */
+  }
+  .welcome {
+    font-family: "Caprasimo", serif;
+            font-weight: 400;
+            font-style: normal;
+  }
+  .welcomepara {
+    font-family: "Playwrite AU TAS", cursive;
+  font-optical-sizing: auto;
+  font-weight: <weight>;
+  font-style: normal;
+  }
+  </style>
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Playwrite+AU+TAS:wght@100..400&display=swap');
+</style>
+
+
+  <header class="hero">
+    <div class="hero-overlay" style="margin-top: 50px;">
+      <h1 class="welcome" >Welcome to Cardi-GPT</h1>
+      <p class="welcomepara">Cardi-GPT is an AI chatbot that interprets ECG reports and explains heart signals using intelligent medical analysis through chatbot.</p>
+      
+    </div>
+  </header>
+
+  <section class="features">
+    <div class="feature-box">
+      <i class="bi bi-cpu fs-3"></i>
+      <h3>Models</h3>
+      <p>Deep Learning models trained on annotated ECG datasets to detect rhythm abnormalities other cardiac conditions.</p>
+    </div>
+    <div class="feature-box">
+      <i class="bi bi-activity fs-3"></i>
+      <h3>Diagnosis</h3>
+      <p>The process of mapping ECG waveforms and intervals to potential clinical conditions.</p>
+    </div>
+    <div class="feature-box">
+      <i class="bi bi-robot fs-3"></i>
+      <h3>Chatbot</h3>
+      <p>Guides users through ECG interpretation by asking structured questions, explaining waveform features.</p>
+    </div>
+    <div class="feature-box highlight">
+      <i class="bi bi-grid fs-3"></i>
+      <h3>Category</h3>
+      <p>ECG interpretations are typically categorized into normal, abnormal but non-critical and critical abnormalities.</p>
+    </div>
+  </section>
+
+  <section class="how-it-works">
+  <h2 class="text-center mb-4" style="color:#3ac689ff;">How It Works</h2>
+  <div class="steps">
+    <div class="step-box">
+      <i class="bi bi-upload"></i>
+      <h4>1. Upload ECG</h4>
+      <p>Users upload or record their ECG data through a secure interface.</p>
+    </div>
+    <div class="step-box">
+      <i class="bi bi-cpu"></i>
+      <h4>2. AI Analysis</h4>
+      <p>Our deep learning model processes and interprets ECG waveforms.</p>
+    </div>
+    <div class="step-box">
+      <i class="bi bi-chat-text"></i>
+      <h4>3. Chatbot Assistance</h4>
+      <p>The chatbot explains findings and answers user questions in simple terms.</p>
+    </div>
+    <div class="step-box">
+      <i class="bi bi-heart-pulse"></i>
+      <h4>4. Report & Insights</h4>
+      <p>Users receive an easy-to-read ECG report with recommendations.</p>
+    </div>
+  </div>
+</section>
+
+{% comment %}chatbot{% endcomment %}
+    <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+      <df-messenger
+        intent="WELCOME"
+        chat-title="Cardi-GPT"
+        agent-id="ea3f91c2-cbcd-4c75-82b9-559a7016bdce"
+        language-code="en"
+        chat-icon="{% static "images/chatbot_icon.png" %}"
+      ></df-messenger>
+
+{% endblock content %}

@@ -1,0 +1,549 @@
+{% extends 'user/base.html' %}
+{% load static %}
+{% block content %}
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=BBH+Sans+Hegarty&display=swap');
+    </style>
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=BBH+Sans+Hegarty&family=Caprasimo&display=swap');
+    </style>
+    <style>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=BBH+Sans+Hegarty&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7f9fc;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container1 {
+            max-width: 1100px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .h1 {
+            color: #3ab680ff;
+            border-bottom: 3px solid #1f9863ff;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .result-section {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .result-image {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+
+        .result-image img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .prediction-box {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+            padding: 30px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .result-0 {
+            background-color: #e6ffed;
+            border: 2px solid #28a745;
+        }
+
+        .result-1 {
+            background-color: #ffeaea;
+            border: 2px solid #dc3545;
+        }
+
+        .prediction-box h2 {
+            margin: 0 0 10px 0;
+            font-size: 1.6em;
+            font-weight: 600;
+        }
+
+        .prediction-value {
+            font-size: 4em;
+            font-weight: bold;
+            display: block;
+            margin: 5px 0 15px 0;
+        }
+
+        .interpretation-content h3 {
+            color: #37b07bff;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+            margin-top: 25px;
+        }
+
+        .recommendation-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .recommendation-list li {
+            background: #f0f8ff;
+            margin-bottom: 8px;
+            padding: 10px;
+            border-left: 4px solid #32ad78ff;
+            border-radius: 4px;
+        }
+
+        .fast-section {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #f0f0f5;
+            border-radius: 8px;
+        }
+
+        .fast-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .fast-item {
+            padding: 15px;
+            background: #ffffff;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .fast-item h4 {
+            color: #6f42c1;
+            font-size: 2.2em;
+            margin: 0 0 5px 0;
+        }
+
+        .fast-call-to-action {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #dc3545;
+            text-align: center;
+            font-size: 1.1em;
+        }
+
+        /* Doctor Cards Section */
+        .doctor-section {
+            margin-top: 50px;
+        }
+
+        .doctor-section h2 {
+            text-align: center;
+            color: #30996cff;
+            margin-bottom: 25px;
+            margin-top: 40px;
+            margin-bottom: 45px;
+            font-family: "Caprasimo", serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+        .tips {
+            text-align: center;
+            color: #30996cff;
+            margin-top: 40px;
+            margin-bottom: 45px;
+            font-family: "Caprasimo", serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .doctor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .doctor-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: 0.3s ease;
+        }
+
+        .doctor-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .doctor-card img {
+            width: 190px;
+            height: 250px;
+            
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 3px solid #ffffffff;
+        }
+
+        .doctor-card h4 {
+            color: #333;
+            margin: 5px 0;
+        }
+
+        .doctor-card p {
+            font-size: 0.95em;
+            color: #555;
+            margin: 5px 0;
+        }
+
+        .contact-btn {
+            margin-top: 10px;
+            display: inline-block;
+            background-color: #35c285ff;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+
+        .contact-btn:hover {
+            background-color: #8cd4b5ff;
+        }
+
+        .why-choose {
+  background: #ffffffff;
+  padding: 60px 0;
+  font-family: "Poppins", sans-serif;
+}
+
+.why-choose .container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.why-choose .col {
+  background: #ffffffff;
+  padding: 30px;
+  border-radius: 12px;
+  flex: 1 1 260px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  transition: transform 0.3s ease;
+  margin-right: 40px;
+}
+
+.why-choose .col:hover {
+  transform: translateY(-6px);
+}
+
+.left-box {
+  background: #d44e4eff;
+  color: #000000ff;
+  text-align: left;
+  flex: 1 1 400px;
+}
+
+.left-box h2 {
+  font-size: 30px;
+  margin-bottom: 5px;
+}
+
+.left-box p {
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.btn-learn {
+  display: inline-block;
+  background: #fff;
+  color: #d71e1e;
+  padding: 10px 22px;
+  border-radius: 30px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.btn-learn i {
+  margin-left: 6px;
+}
+
+.btn-learn:hover {
+  background: #f4c2c2;
+}
+
+.info-box h3 {
+  font-size: 18px;
+  color: #222;
+  margin-top: 15px;
+}
+
+.info-box p {
+  font-size: 14px;
+  color: #555;
+  margin-top: 10px;
+}
+
+.icon {
+  font-size: 26px;
+  background: #ffeaea;
+  color: #d71e1e;
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  line-height: 70px;
+  display: inline-block;
+}
+    </style>
+
+
+<div class="container1">
+    <h1 class="h1">Stroke Prediction Result 🧠🩺</h1>
+
+    <!-- Result Section (Image + Prediction Box) -->
+    <div class="result-section">
+        <div class="result-image">
+            <img src="{% static "images/stroke_img.jpg" %}" alt="Doctor Consultation">
+        </div>
+
+        <div class="prediction-box {% if prediction_result == 1 %}result-1{% else %}result-0{% endif %}">
+            <h2>Model Prediction Result:</h2>
+            
+            {% if prediction_result == 1 %}
+                    <h1 style="color: #dc3545; font-weight: 800;">Stroke Detected</h1>
+                {% elif prediction_result == 0 %}
+                    <h1 style="color: #2da250ff; font-weight: 800;">No Stroke Detected</h1>
+                {% endif %}
+            <p>
+                {% if prediction_result == 1 %}
+                    (Stroke Detected)
+                {% elif prediction_result == 0 %}
+                    (No Stroke Detected - Low Risk)
+                {% endif %}
+            </p>
+        </div>
+    </div>
+    <section class="why-choose">
+  <div class="container">
+    <div class="row">
+      
+      <!-- Left Highlight Box -->
+      <div class="col left-box" style="background-color: #73b883ae; height: 290px;">
+        <h2>Explanation</h2>
+        {% if prediction_result == 1 %}
+            <p>
+            The analysis indicates a <strong>high likelihood of stroke</strong>, increasing the risk of a stroke. 
+            It is strongly advised to consult a healthcare professional immediately for further diagnostic evaluation and early treatment.
+            </p>
+        {% elif prediction_result == 0 %}
+            <p>
+            The analysis shows <strong>no significant risk of stroke detected</strong> based on your current medical data. 
+            Your health indicators such as age, BMI, blood pressure, and glucose levels are within normal ranges. 
+            </p>
+        {% endif %}
+        <a href="{% url 'user_dashboard' %}" class="btn-learn">Detect Again <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+
+      <!-- Explanation -->
+      
+
+      <!-- Result -->
+      {% comment %} <div class="col info-box">
+        <div class="icon">
+          <i class="fa-solid fa-heart-pulse"></i>
+        </div>
+        <h3>Result</h3>
+        <p>
+          The system predicts whether a stroke is <strong>Detected</strong> or
+          <strong>Not Detected</strong>, along with the probability score.
+        </p>
+      </div> {% endcomment %}
+
+      <!-- Algorithm Used -->
+      <div class="col info-box">
+        <div class="icon">
+          <i class="fa-solid fa-microchip"></i>
+        </div>
+        <h3>Algorithm Used</h3>
+        <p>
+          Model is used
+          predictions 
+          <h3 style="font-size: 25px; font-weight: 800; color: #cf4646ff;">Random Forest Classifier</h3>
+        </p>
+      </div>
+
+      <!-- Accuracy -->
+      <div class="col info-box">
+        <div class="icon">
+          <i class="fa-solid fa-chart-line"></i>
+        </div>
+        <h3>Accuracy</h3>
+        <p>
+          The model achieved an accuracy of 
+          <h3 style="font-size: 30px; font-weight: 800; color: #cf4646ff;">99.18%</h3>
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+    {% if prediction_result == 1 %}
+<div class="explanation-section" style="margin-top: 30px; background: #fff8e6; padding: 25px; border-left: 5px solid #f5a623; border-radius: 8px;">
+    <h3 style="color: #e67e22;">⚠️ Explanation: Why Stroke Risk Was Detected</h3>
+    <p>
+        The system identified a combination of health indicators that strongly correlate with increased stroke risk.  
+        Below are possible contributing factors based on your inputs:
+    </p>
+    <ul style="list-style-type: none; padding-left: 0;">
+        <li>🩸 <strong>High Blood Pressure (Hypertension):</strong> A leading cause of stroke due to vessel damage.</li>
+        <li>💓 <strong>Heart Disease:</strong> May lead to blood clots that block brain arteries.</li>
+        <li>🍬 <strong>High Glucose Levels:</strong> Indicates possible diabetes risk increasing stroke chances.</li>
+        <li>🚬 <strong>Smoking Status:</strong> Smoking accelerates vessel narrowing and clot formation.</li>
+        <li>🏠 <strong>Lifestyle/Work Type:</strong> Sedentary lifestyle or stressful job patterns may contribute.</li>
+    </ul>
+    <p>
+        <strong>Note:</strong> This explanation is AI-generated based on model interpretation and should not replace medical advice.  
+        Please consult a neurologist immediately for a professional diagnosis.
+    </p>
+</div>
+{% endif %}
+
+    <!-- Interpretation Section -->
+    <div class="interpretation-content">
+        {% if prediction_result == 1 %}
+            <h3>Interpretation: High Risk Identified </h3>
+            <p>The predictive model suggests that your profile has a <strong>high statistical similarity</strong> to patients who have experienced a stroke. This is a serious warning requiring urgent attention.</p>
+
+            <h2 class="tips">Tips And Recommendation</h2>
+            <ul class="recommendation-list">
+    <li><strong>Seek Immediate Consultation:</strong> Contact your doctor or a neurologist immediately for a detailed evaluation. Early medical attention can prevent a major stroke or reduce its severity.</li>
+    
+    <li><strong>Diagnostic Tests:</strong> Request advanced diagnostic tests such as a CT scan, MRI, or carotid ultrasound to assess any blockages, bleeding, or damage in the brain. Your doctor may also suggest blood tests to check cholesterol, sugar levels, and clotting function.</li>
+    
+    <li><strong>Medication Review:</strong> Follow your doctor’s advice on medications like blood thinners, antihypertensives, or cholesterol-lowering drugs. Never self-medicate without professional guidance.</li>
+    
+    <li><strong>Risk Reduction:</strong> Take immediate steps to manage key risk factors such as high blood pressure, high glucose, and high cholesterol. Adopt a low-salt, low-fat diet, avoid smoking and alcohol, and ensure regular physical activity as per medical advice.</li>
+    
+    <li><strong>Monitor Symptoms:</strong> Stay alert for warning signs like sudden weakness, numbness, vision changes, speech difficulty, dizziness, or severe headache. If any of these occur, rush to the emergency room immediately.</li>
+    
+    
+</ul>
+
+        {% elif prediction_result == 0 %}
+            <h3>Interpretation: Low Risk Identified</h3>
+            <p>The model suggests the likelihood of a stroke is currently <strong>low</strong>. Continue maintaining healthy habits and regular checkups.</p>
+            <h2 class="tips">Tips And Recommendation</h2>
+            
+            <ul class="recommendation-list">
+    <li><strong>Routine Check-ups:</strong> Continue regular health check-ups with your doctor to monitor blood pressure, cholesterol, and glucose levels. Early detection of changes helps prevent future risks.</li>
+    
+    <li><strong>Healthy Lifestyle:</strong> Maintain a balanced diet rich in fruits, vegetables, whole grains, and lean proteins. Engage in regular physical activity, avoid smoking, and limit alcohol consumption to keep your cardiovascular system strong.</li>
+    
+    <li><strong>Stay Hydrated and Stress-Free:</strong> Drink plenty of water daily and practice stress-relieving activities such as yoga, meditation, or deep breathing exercises.</li>
+    
+    <li><strong>Know the Signs:</strong> Even if no stroke is detected now, stay aware of F.A.S.T. symptoms — <strong>F</strong>ace drooping, <strong>A</strong>rm weakness, <strong>S</strong>peech difficulty, and <strong>T</strong>ime to call emergency services — to act quickly if they appear in the future.</li>
+    
+    <li><strong>Follow Medical Advice:</strong> If you have other risk factors such as diabetes, hypertension, or high cholesterol, continue your prescribed medications and follow your healthcare provider’s recommendations.</li>
+</ul>
+
+        {% endif %}
+    </div>
+
+    <!-- F.A.S.T. Section -->
+    <div class="fast-section">
+        <h3>Key Stroke Warning Signs (F.A.S.T.)</h3>
+        <p>Recognizing these symptoms quickly is critical for better outcomes. <strong>Time is brain!</strong></p>
+        <div class="fast-grid">
+            <div class="fast-item">
+                <h4>F</h4>
+                <p><strong>Face Drooping:</strong> Ask the person to smile. Does one side droop?</p>
+            </div>
+            <div class="fast-item">
+                <h4>A</h4>
+                <p><strong>Arm Weakness:</strong> Ask them to raise both arms. Does one drift down?</p>
+            </div>
+            <div class="fast-item">
+                <h4>S</h4>
+                <p><strong>Speech Difficulty:</strong> Is their speech slurred or hard to understand?</p>
+            </div>
+            <div class="fast-item">
+                <h4>T</h4>
+                <p><strong>Time to Call:</strong> If any symptom appears, call emergency services immediately!</p>
+            </div>
+        </div>
+        <p class="fast-call-to-action">In an emergency, every minute counts. Note the time symptoms began.</p>
+    </div>
+
+    <!-- Doctor Recommendation Section -->
+    <div class="doctor-section">
+        <h2>Recommend a Doctor 👨‍⚕️👩‍⚕️</h2>
+        <div class="doctor-grid">
+            <div class="doctor-card">
+                <img src="https://www.carehospitals.com/assets/images/main/dr-a-s-v-narayana-rao.webp" alt="Dr. Ramesh">
+                <h4>Dr. A. S. V. Narayana Rao</h4>
+                <p>Senior Cardiologist</p>
+                <p>Care Hospitals, Hyderabad</p>
+                <p>📍 Road No.10, Banjara Hills</p>
+                <a href="https://www.carehospitals.com/doctor/hyderabad/banjara-hills/a-s-v-narayana-rao-interventional-cardiologist" class="contact-btn">Contact</a>
+            </div>
+
+            <div class="doctor-card">
+                <img src="https://www.carehospitals.com/assets/images/main/dr-aman-salwan.webp" alt="Dr. Priya">
+                <h4>Dr. Aman Salwan</h4>
+                <p>Stroke Specialist</p>
+                <p>Apollo Hospitals, Hyderabad</p>
+                <p>📍 Jubilee Hills, Hyderabad</p>
+                <a href="https://www.carehospitals.com/doctor/hyderabad/nampally/aman-salwan-interventional-cardiologist" class="contact-btn">Contact</a>
+            </div>
+
+            <div class="doctor-card">
+                <img src="https://www.carehospitals.com/assets/images/main/dr-lalitha.webp" alt="Dr. Arjun">
+                <h4>Dr. Lalitha Ravinuthala</h4>
+                <p>Consultant Cardiologist</p>
+                <p>Yashoda Hospitals, Secunderabad</p>
+                <p>📍 Somajiguda, Hyderabad</p>
+                <a href="https://www.carehospitals.com/doctor/hyderabad/nampally/lalitha-ravinuthala-heart-doctor" class="contact-btn">Contact</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Alerts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+{% if messages %}
+  {% for message in messages %}
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+      <script>swal({ title: 'Success!', text: '{{ message }}', icon: 'success', button: 'OK' })</script>
+    {% elif message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+      <script>swal({ title: 'Warning!', text: '{{ message }}', icon: 'warning', button: 'OK' })</script>
+    {% elif message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+      <script>swal({ title: 'Info!', text: '{{ message }}', icon: 'info', button: 'OK' })</script>
+    {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+      <script>swal({ title: 'Error!', text: '{{ message }}', icon: 'error', button: 'OK' })</script>
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% endblock content %}

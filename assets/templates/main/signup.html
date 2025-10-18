@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <link rel="shortcut icon" href="{% static "images/favicon.png" %}" type="">
+
+  <title> CardiGPT </title>
+  <script src="https://kit.fontawesome.com/1ad2811ffc.js" crossorigin="anonymous"></script>
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.css" %}" />
+
+  <!-- fonts style -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <!--owl slider stylesheet -->
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+
+  <!-- font awesome style -->
+  <link href="{% static "css/font-awesome.min.css" %}" rel="stylesheet" />
+
+  <!-- Custom styles for this template -->
+  <link href="{% static "css/style.css" %}" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="{% static "css/responsive.css" %}" rel="stylesheet" />
+    <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f8f9fa;
+    }
+    .signup-section {
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 90px 30px 50px;
+    }
+    .signup-box {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 10px 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+    }
+    .input {
+        padding: 10px;
+    }
+    .form-control {
+      border-radius: 8px;
+    }
+    .btn-signup {
+      background-color: #62d2a2;
+      width: 100%;
+      color: #fff;
+      border-radius: 8px;
+      padding: 10px;
+      font-size: 16px;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+    .btn-signup:hover {
+      color: #fff;
+      background-color: #7ecfacff;
+    }
+    .upload-text {
+      font-size: 14px;
+      margin-top: 5px;
+      color: #555;
+    }
+    .illustration img {
+      max-width: 120%;
+    }
+  </style>
+</head>
+
+<body class="sub_page">
+
+  <div class="hero_area">
+    <!-- header section strats -->
+    <header class="header_section">
+      <div class="container">
+        <nav class="navbar navbar-expand-lg custom_nav-container ">
+          <a class="navbar-brand" href="{% url 'home' %}">
+            <span>
+              <i class="fa-solid fa-robot" style="color: #ffffff;"></i> Cardi-GPT
+            </span>
+          </a>
+
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class=""> </span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'home' %}">Home </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'about' %}"> About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'signup' %}"><button style="color: green; background-color: white; border: 1px; padding: 8px 16px; cursor: pointer; border-radius: 15px; margin-right: 15px;">Signup</button></a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'login' %}"><button style="color: green; background-color: white; border: 1px; padding: 8px 16px; cursor: pointer; border-radius: 15px;">Login</button></a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <!-- end header section -->
+  </div>
+<section class="signup-section">
+    <div class="container">
+      <div class="row align-items-center">
+        <!-- Left Illustration -->
+        <div class="col-lg-6 mb-4 mb-lg-0 illustration text-center">
+          <img src="{% static "images/signup_img.jpg" %}" alt="Signup Illustration"  />
+        </div>
+
+        <!-- Right Form -->
+        <div class="col-lg-6">
+          <div class="signup-box">
+            <h2 class="text-center mb-4 fw-bold" style="color:#4b164c;">Create an Account</h2>
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+              <div class="row g-3">
+                <div class="col-md-6 input">
+                  <input type="text" class="form-control" placeholder="Your Name" name="username" required />
+                </div>
+                <div class="col-md-6 input">
+                  <input type="email" class="form-control" placeholder="Your Email" name="useremail" required />
+                </div>
+                <div class="col-md-6 input">
+                  <input type="number" class="form-control" placeholder="Your Age" name="age" required />
+                </div>
+                <div class="col-md-6 input">
+                  <input type="text" class="form-control" placeholder="Your Address" name="address" required />
+                </div>
+                <div class="col-md-6 input">
+                  <input type="tel" class="form-control" placeholder="Your Phone no." name="phno" required />
+                </div>
+                <div class="col-md-6 position-relative input">
+                  <input type="password" class="form-control" placeholder="Create Password" name="userpassword" required />
+                </div>
+                <div class="col-12 input">
+                  <input type="file" class="form-control" name="userimage" />
+                  <div class="upload-text text-center">Upload Profile Picture</div>
+                </div>
+              </div>
+
+              <div class="d-grid mt-4">
+                <button type="submit" class="btn btn-signup">Sign up</button>
+              </div>
+
+              <p class="text-center mt-3">
+                Already have an account?
+                <a href="{% url 'login' %}" class="text-decoration-none" style="color:#62d2a2;">Sign in</a>
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+
+  <!-- footer section -->
+  <footer class="footer_section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-lg-3 footer_col">
+          <div class="footer_contact">
+            <h2 style="color: whitesmoke;">
+              Cardi-GPT
+            </h2>
+            <div class="contact_link_box">
+              <a href="https://maps.app.goo.gl/XcxZbzXfEUqohFpq7">
+                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                <span>
+                  Location
+                </span>
+              </a>
+              <a href="">
+                <i class="fa fa-phone" aria-hidden="true"></i>
+                <span>
+                  Call +91 8555887986
+                </span>
+              </a>
+              <a href="">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <span>
+                  info@codebook.in
+                </span>
+              </a>
+            </div>
+          </div>
+          <div class="footer_social">
+            <a href="">
+              <i class="fa fa-facebook" aria-hidden="true"></i>
+            </a>
+            <a href="">
+              <i class="fa fa-twitter" aria-hidden="true"></i>
+            </a>
+            <a href="">
+              <i class="fa fa-linkedin" aria-hidden="true"></i>
+            </a>
+            <a href="">
+              <i class="fa fa-instagram" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-2 mx-auto footer_col">
+          <div class="footer_link_box">
+            <h4>
+              Links
+            </h4>
+            <div class="footer_links">
+              <a class="active" href="{% url 'home' %}">
+                Home
+              </a>
+              <a class="" href="{% url 'about' %}">
+                About
+              </a>
+              <a class="" href="#">
+                Departments
+              </a>
+              <a class="" href="#">
+                Doctors
+              </a>
+              <a class="" href="{% url 'contact' %}">
+                Contact Us
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-2 mx-auto footer_col">
+          <div class="footer_link_box">
+            <h4>
+              Categories
+            </h4>
+            <div class="footer_links">
+              <a class="active" href="#">
+                AI Chatbot
+              </a>
+              <a class="" href="">
+                ECG Analysis
+              </a>
+              <a class="" href="#">
+                Reports
+              </a>
+              
+              <a class="" href="#">
+                How It Works
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 footer_col">
+          <div class="footer_detail" style="width: 350px;">
+            <h4>
+              About
+            </h4>
+            <p>
+              CardiGPT is an AI-powered healthcare assistant that provides quick ECG interpretations, real-time cardiac insights, and intelligent chatbot support for patients and healthcare professionals. It uses deep learning models to analyze ECG data, detect abnormalities.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="footer-info">
+        <p>
+          &copy; <span id="displayYear"></span> All Rights Reserved By
+          <a href="https://html.design/">Codebook<br><br></a>
+            
+        </p>
+       
+      </div>  
+    </div>
+  </footer>
+  <!-- footer section -->
+
+  <!-- jQery -->
+  <script type="text/javascript" src="{% static "js/jquery-3.4.1.min.js" %}"></script>
+  <!-- popper js -->
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+  </script>
+  <!-- bootstrap js -->
+  <script type="text/javascript" src="{% static "js/bootstrap.js" %}"></script>
+  <!-- owl slider -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
+  </script>
+  <!-- custom js -->
+  <script type="text/javascript" src="{% static "js/custom.js" %}"></script>
+  <!-- Google Map -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap">
+  </script>
+  <!-- End Google Map -->
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    {% if messages %}
+      {% for message in messages %}
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+          <script>
+            swal({ title: 'Success!', text: '{{ message }}', icon: 'success', button: 'OK' })
+          </script>
+        {% elif message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+          <script>
+            swal({ title: 'Warning!', text: '{{ message }}', icon: 'warning', button: 'OK' })
+          </script>
+        {% elif message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+          <script>
+            swal({ title: 'Info!', text: '{{ message }}', icon: 'info', button: 'OK' })
+          </script>
+        {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+          <script>
+            swal({ title: 'Error!', text: '{{ message }}', icon: 'error', button: 'OK' })
+          </script>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+
+
+</body>
+
+</html>

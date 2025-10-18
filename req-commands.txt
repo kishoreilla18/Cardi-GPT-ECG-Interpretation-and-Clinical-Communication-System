@@ -1,0 +1,18 @@
+Installing Django
+pip install django==3.1.12
+
+Installling Djongo
+pip install djongo==1.3.7
+
+Installing vadersentiment
+pip install vaderSentiment
+
+Checking Models before migrating
+python manage.py makemigrations
+
+Migrating Models to Database
+python manage.py migrate
+
+Running the project/server
+python manage.py runserver
+

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <link rel="shortcut icon" href="{% static "images/favicon.png" %}" type="">
+
+  <title> Cardi-GPT </title>
+  <script src="https://kit.fontawesome.com/1ad2811ffc.js" crossorigin="anonymous"></script>
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.css" %}" />
+  
+  <!-- fonts style -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <!--owl slider stylesheet -->
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+
+  <!-- font awesome style -->
+  <link href="{% static "css/font-awesome.min.css" %}" rel="stylesheet" />
+
+  <!-- Custom styles for this template -->
+  <link href="{% static "css/style.css" %}" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="{% static "css/responsive.css" %}" rel="stylesheet" />
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+<!-- Optional CSS -->
+  <style>
+    
+
+    .container1 {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      padding: 40px;
+      gap: 40px;
+      justify-content: center;
+      align-items: flex-start;
+      font-family: 'Segoe UI', sans-serif; 
+      
+    }
+
+    .image-section {
+      flex: 1 1 300px;
+      max-width: 500px;
+    }
+
+    .image-section img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    .content-section {
+      flex: 1 1 300px;
+      max-width: 600px;
+    }
+
+    .label {
+      display: inline-block;
+      background-color: #62d2a2;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+
+    .headline {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 16px;
+    }
+
+    .paragraph {
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .read-more-btn {
+      color: #62d2a2;
+      background-color: white;
+      border: 2px solid #62d2a2;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .read-more-btn:hover {
+      background-color: #e8f5e9;
+    }
+
+    .mission-box {
+      background-color: #43af80ff;
+      color: white;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 40px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .mission-box i {
+      font-size: 24px;
+    }
+
+    .values {
+      margin-top: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .value-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 16px;
+      color: #444;
+    }
+
+    .value-icon {
+      width: 20px;
+      height: 20px;
+      background-color: #62d2a2;
+      border-radius: 50%;
+      display: inline-block;
+      text-align: center;
+      color: white;
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .container1 {
+        flex-direction: column;
+        padding: 20px;
+      }
+    }
+    .breadcrumb-section {
+      position: relative;
+      background: url('{% static "images/breadcrumb1.jpg" %}') center/cover no-repeat;
+      padding: 80px 20px;
+      color: #fff;
+    }
+    
+    .breadcrumb-section .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.4); /* dark overlay */
+    }
+    
+    .breadcrumb-section .container {
+      position: relative;
+      z-index: 2;
+      text-align: left;
+    }
+    
+    .breadcrumb-title {
+      font-size: 3rem;
+      font-weight: 700;
+      margin: 0 0 10px;
+    }
+    
+    .breadcrumb-nav {
+      font-size: 1.2rem;
+    }
+    
+    .breadcrumb-nav a {
+      color: #fff;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    
+    .breadcrumb-nav .divider {
+      margin: 0 8px;
+      color: #ddd;
+    }
+    
+    .breadcrumb-nav span {
+      color: #ddd;
+    }
+  </style>
+</head>
+
+<body class="sub_page">
+
+  <div class="hero_area">
+    <!-- header section strats -->
+    <header class="header_section">
+      <div class="container">
+        <nav class="navbar navbar-expand-lg custom_nav-container ">
+          <a class="navbar-brand" href="{% url 'home' %}">
+            <span>
+              <i class="fa-solid fa-robot" style="color: #ffffff;"></i> Cardi-GPT
+            </span>
+          </a>
+
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class=""> </span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'home' %}">Home </a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'about' %}"> About <span class="sr-only">(current)</span> </a>
+              </li>
+              
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'signup' %}"><button style="color: green; background-color: white; border: 1px; padding: 8px 16px; cursor: pointer; border-radius: 15px; margin-right: 15px;">Signup</button></a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'login' %}"><button style="color: green; background-color: white; border: 1px; padding: 8px 16px; cursor: pointer; border-radius: 15px;">Login</button></a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <!-- end header section -->
+  </div>
+
+  <section class="breadcrumb-section">
+    <div class="overlay"></div>
+    <div class="container">
+      <h1 class="breadcrumb-title">About</h1>
+      <nav class="breadcrumb-nav">
+        <a href="{% url 'home' %}">Home</a> <span class="divider">»</span> <span>About</span>
+      </nav>
+    </div>
+  </section>
+  <!-- about section -->
+
+  <section class="about_section layout_padding">
+    <div class="container  ">
+      <div class="row">
+        <div class="col-md-6 ">
+          <div class="img-box">
+            <img src="{% static "images/about.jpg" %}" alt="">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="detail-box">
+            <div class="heading_container">
+              <h2>
+                About <span>Us</span>
+              </h2>
+            </div>
+            <p>
+              CardiGPT is an AI-powered health assistant designed to provide accurate and user-friendly information about cardiology and general healthcare. It helps users understand medical terms, diagnostic inputs, and treatment options in a simple way, while also offering guidance on lifestyle and preventive care for better heart health. CardiGPT aims to make healthcare knowledge more accessible, empowering individuals to take informed steps toward their well-being.
+            </p>
+            <a href="">
+              Read More
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- end about section -->
+
+  <div class="container1">
+    <div class="image-section">
+      <img src="{% static "images/about_img1.jpg" %}" alt="Cardiology Chatbot Image" />
+    </div>
+    <div class="content-section">
+      {% comment %} <div class="label">ABOUT US</div> {% endcomment %}
+      <div class="headline">
+        Revolutionizing heart health with intelligent, accessible, and compassionate chatbot support
+      </div>
+      <div class="paragraph">
+        Our cardiology chatbot is designed to assist patients and healthcare providers with timely, accurate, and empathetic support. From symptom checks to appointment scheduling and lifestyle tips, our AI-powered assistant helps users navigate their heart health journey with confidence and care.
+      </div>
+      <button class="read-more-btn">Learn More</button>
+
+      <div class="mission-box">
+        <i>❤️</i>
+        <div>
+          Our mission is to enhance cardiovascular care through intelligent automation, improving access and outcomes for every patient.
+        </div>
+      </div>
+
+      <div class="values">
+        <div class="value-item"><span class="value-icon">✓</span> AI-Powered Assistant</div>
+        <div class="value-item"><span class="value-icon">✓</span> Focus on Cardiology</div>
+        <div class="value-item"><span class="value-icon">✓</span> ECG Interpretation Support</div>
+        <div class="value-item"><span class="value-icon">✓</span> Clinical Communication</div>
+        <div class="value-item"><span class="value-icon">✓</span> User-Friendly</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- footer section -->
+  <footer class="footer_section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-lg-3 footer_col">
+          <div class="footer_contact">
+            <h2 style="color: whitesmoke;">
+              Cardi-GPT
+            </h2>
+            <div class="contact_link_box">
+              <a href="https://maps.app.goo.gl/XcxZbzXfEUqohFpq7">
+                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                <span>
+                  Location
+                </span>
+              </a>
+              <a href="">
+                <i class="fa fa-phone" aria-hidden="true"></i>
+                <span>
+                  Call +91 8555887986
+                </span>
+              </a>
+              <a href="">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <span>
+                  info@codebook.in
+                </span>
+              </a>
+            </div>
+          </div>
+          <div class="footer_social">
+            <a href="">
+              <i class="fa fa-facebook" aria-hidden="true"></i>
+            </a>
+            <a href="">
+              <i class="fa fa-twitter" aria-hidden="true"></i>
+            </a>
+            <a href="">
+              <i class="fa fa-linkedin" aria-hidden="true"></i>
+            </a>
+            <a href="">
+              <i class="fa fa-instagram" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-2 mx-auto footer_col">
+          <div class="footer_link_box">
+            <h4>
+              Links
+            </h4>
+            <div class="footer_links">
+              <a class="active" href="{% url 'home' %}">
+                Home
+              </a>
+              <a class="" href="{% url 'about' %}">
+                About
+              </a>
+              <a class="" href="#">
+                Departments
+              </a>
+              <a class="" href="#">
+                Doctors
+              </a>
+              <a class="" href="{% url 'contact' %}">
+                Contact Us
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-2 mx-auto footer_col">
+          <div class="footer_link_box">
+            <h4>
+              Categories
+            </h4>
+            <div class="footer_links">
+              <a class="active" href="#">
+                AI Chatbot
+              </a>
+              <a class="" href="">
+                ECG Analysis
+              </a>
+              <a class="" href="#">
+                Reports
+              </a>
+              
+              <a class="" href="#">
+                How It Works
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 footer_col">
+          <div class="footer_detail" style="width: 350px;">
+            <h4>
+              About
+            </h4>
+            <p>
+              CardiGPT is an AI-powered healthcare assistant that provides quick ECG interpretations, real-time cardiac insights, and intelligent chatbot support for patients and healthcare professionals. It uses deep learning models to analyze ECG data, detect abnormalities.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="footer-info">
+        <p>
+          &copy; <span id="displayYear"></span> All Rights Reserved By
+          <a href="https://html.design/">Codebook<br><br></a>
+            
+        </p>
+       
+      </div>  
+    </div>
+  </footer>
+  <!-- footer section -->
+
+  <!-- jQery -->
+  <script type="text/javascript" src="{% static "js/jquery-3.4.1.min.js" %}"></script>
+  <!-- popper js -->
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+  </script>
+  <!-- bootstrap js -->
+  <script type="text/javascript" src="{% static "js/bootstrap.js" %}"></script>
+  <!-- owl slider -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
+  </script>
+  <!-- custom js -->
+  <script type="text/javascript" src="{% static "js/custom.js" %}"></script>
+  <!-- Google Map -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap">
+  </script>
+  <!-- End Google Map -->
+
+</body>
+
+</html>

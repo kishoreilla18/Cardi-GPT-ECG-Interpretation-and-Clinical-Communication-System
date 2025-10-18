@@ -1,0 +1,961 @@
+{% extends 'user/base.html' %}
+{% load static %}
+
+{% block content %}
+<script src="https://kit.fontawesome.com/1ad2811ffc.js" crossorigin="anonymous"></script>
+
+  <style>
+    /* ===========================
+   Global Styles
+=========================== */
+body {
+  background: #ffffffff;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+/* ===========================
+   Breadcrumb
+=========================== */
+.breadcrumb-section {
+  position: relative;
+  background: url('{% static "images/breadcrumb1.jpg" %}') center/cover no-repeat;
+  padding: 80px 20px;
+  color: #fff;
+}
+
+.breadcrumb-section .overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.breadcrumb-section .container {
+  position: relative;
+  z-index: 2;
+}
+
+.breadcrumb-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.breadcrumb-nav {
+  font-size: 1rem;
+}
+
+.breadcrumb-nav a {
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.breadcrumb-nav .divider {
+  margin: 0 8px;
+  color: #ddd;
+}
+
+/* ===========================
+   Result Card
+=========================== */
+.result-card {
+  border-radius: 1rem;
+  padding: 2rem;
+  background: #ffffffff;
+  margin: 2rem auto;
+  max-width: 1100px;
+}
+
+/* Labels and Values */
+.result-label {
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+.result-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.result-green {
+  background: #e6f9f0;
+  color: #198754;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  text-align: center;
+}
+
+.result-blue {
+  background: #eaf3ff;
+  color: #0d6efd;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  text-align: center;
+}
+
+.result-red {
+  background: #fdeaea;
+  color: #dc3545;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  text-align: center;
+}
+
+/* Blink animation */
+.slowBlink {
+  animation: slowBlink 1s infinite;
+}
+
+@keyframes slowBlink {
+  0%, 50%, 100% { opacity: 1; }
+  25%, 75% { opacity: 0.3; }
+}
+
+/* ===========================
+   Image Segmentation
+=========================== */
+.segmentation-container {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.images-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  max-width: 900px;
+  margin: auto;
+}
+
+.image-card {
+  background: #fff;
+  border: 2px solid #eee;
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+}
+
+.image-card:hover {
+  transform: translateY(-4px);
+}
+
+.image-card img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.image-card p {
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #0f2740;
+}
+
+/* ===========================
+   Tabs & Content
+=========================== */
+.result-container {
+  max-width: 1200px;
+  margin: auto;
+  margin-top: 90px;
+  text-align: center;
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.tab {
+  padding: 10px 18px;
+  margin: 5px;
+  border: 2px solid #62d2a2;
+  border-radius: 6px 6px 0 0;
+  background: #f5f5f5;
+  color: #07ab64ff;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.tab:hover {
+  background: #e0f7f5;
+}
+
+.tab.active {
+  background: #62d2a2;
+  color: #fff;
+  border-bottom: none;
+}
+
+.tab-content {
+  display: none;
+  text-align: left;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  background: #fff;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* Content Grid */
+.content-grid {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.image-box img {
+  width: 350px;
+  height: 300px;
+  border-radius: 12px;
+}
+
+.text-box {
+  flex: 1 1 350px;
+}
+
+.text-box h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #222;
+}
+
+.text-box p {
+  font-size: 16px;
+  color: #353535ff;
+  line-height: 1.6;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.detect-btn {
+  padding: 10px 20px;
+  background: #62d2a2;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.detect-btn:hover {
+  background: #8dd2b4ff;
+}
+
+/* ===========================
+   Model Details Cards
+=========================== */
+.model-details-container {
+  text-align: center;
+  padding: 20px;
+}
+
+.card-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.info-card {
+  width: 250px;
+  padding: 20px 0;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.model-name-card {
+  border-left: 4px solid #62d2a2;
+}
+
+.model-accuracy-card {
+  border-left: 4px solid #62d2a2;
+}
+
+.card-title {
+  font-size: 44px;
+  color: #555;
+}
+
+.card-value {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.model-accuracy-card .card-value {
+  color: #009688;
+}
+
+/* ===========================
+   Treatment Cards
+=========================== */
+/* General Container and Reset */ .treatment-plan-container { font-family: Arial, sans-serif; /* Clean, legible font */ text-align: center; /* Center the heading */ padding: 10px; width: 600px; background-color: #ffffffff; /* Light background for contrast, optional */ } /* Heading Style */ .treatment-plan-container h1 { font-size: 25px; font-weight: 500; color: #333; margin-bottom: 30px; } /* General Card Styling */ .treatment-card { /* Center the card and set a max width for readability */ max-width: 800px; margin: 20px auto; padding: 25px; text-align: left; /* Align text inside the card to the left */ /* Background and corners */ background-color: #e5ebe8ff; /* Very light blue background */ border-radius: 8px; /* Slightly rounded corners */ /* Box shadow for depth and the blue border effect */ box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle vertical blue borders on the left and right */ border-left: 3px solid #62d2a2; border-right: 1px solid #cceeff; border-top: 1px solid #cceeff; border-bottom: 1px solid #cceeff; } /* Text Formatting within Cards */ .treatment-card p, .treatment-card li { font-size: 15px; line-height: 1.6; color: #333; margin: 0; /* Remove default margin for paragraphs */ } /* Styling for the first card (Recommended Treatment) - Text block */ .recommended-treatment-card p { margin-bottom: 0; } /* Styling for the second card (Next Steps) - List block */ .next-steps-card ul { list-style-type: disc; /* Use standard bullet points */ padding-left: 20px; /* Indent the list */ margin-top: 5px; margin-bottom: 0; } .next-steps-card li { margin-bottom: 8px; /* Space between list items */ } /* Ensure the strong tag (titles) is bold and stands out slightly */ .treatment-card strong { font-weight: bold; color: #222; }
+
+/* ===========================
+   Specialist Cards
+=========================== */
+.specialist-finder-container {
+  text-align: center;
+  background: #ffffffff;
+  padding: 30px 10px;
+}
+
+.specialist-card-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.specialist-card {
+  flex: 1 1 300px;
+  max-width: 270px;
+  padding: 15px;
+  background: #e5ebe8ff;
+  border: 1px solid #ffffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.image-placeholder {
+  width: 100px;
+  height: 100px;
+  margin: auto;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid #ffffffff;
+}
+
+.image-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.doctor-name {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.specialty {
+  font-size: 13px;
+  color: #007bff;
+  font-weight: 500;
+  margin-bottom: 15px;
+}
+
+.contact-info p {
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contact-info i {
+  margin-right: 6px;
+}
+/* graph */
+    .graph-head {
+      text-align: center;
+      margin-top: 10px;
+      margin-bottom: 30px;
+      font-weight: 600;
+      color: #222;
+    }
+
+    .graph-card {
+      border: 1.5px solid #0d6efd3d;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      transition: transform 0.2s ease;
+      background-color: #fff;
+    }
+
+    .graph-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .graph-title {
+      text-align: center;
+      font-weight: 500;
+      font-size: 17px;
+      margin-bottom: 15px;
+    }
+
+    .graph-img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    @media (max-width: 768px) {
+      .graph-head {
+        font-size: 20px;
+      }
+    }
+
+/* ===========================
+   Responsive
+=========================== */
+@media (max-width: 768px) {
+  .content-grid {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .tabs {
+    flex-direction: column;
+  }
+
+  .tab {
+    width: 100%;
+  }
+
+  .specialist-card {
+    width: 90%;
+    max-width: 400px;
+  }
+}
+
+  </style>
+  {% comment %} breadcrumb {% endcomment %}
+  <section class="breadcrumb-section">
+    <div class="overlay"></div>
+    <div class="container">
+      <h1 class="breadcrumb-title">Detection Result</h1>
+      <nav class="breadcrumb-nav">
+        <a href="{% url 'user_dashboard' %}">Dashboard</a> <span class="divider">»</span> <span>Result</span>
+      </nav>
+    </div>
+  </section>
+
+  
+    <!-- Page Header -->
+    {% comment %} <div class="page-header">
+      <h2><i class="bi bi-heart-pulse-fill me-2"></i>ECG Detection Results</h2>
+    </div> {% endcomment %}
+
+    <!-- Result Card -->
+    <div class="result-card">
+      <div class="text-center">
+        <div class="segmentation-container">
+          <h2 style="font-size: 37px; color: #2c3e50; text-align: center; font-weight: bold; margin-bottom: 15px;">
+            Images Segmentation
+          </h2>
+          
+            <div class="images-grid">
+              <div class="image-card">
+                <img src="data:image/jpeg;base64, {{uploaded_image_base64}}" alt="Uploaded Image">
+                <p>Uploaded Image</p>
+              </div>
+              <div class="image-card">
+                <img src="data:image/jpeg;base64, {{segmented_image_base64}}" alt="Segmented Image">
+                <p>Segmented Image</p>
+              </div>
+              <div class="image-card">
+                <img src="data:image/jpeg;base64, {{grayscale_image_base64}}" alt="grayscale image">
+                <p>grayscale image</p>
+              </div>
+            </div>
+        </div>
+
+        <div class="result-container">
+          <h2 style="font-size: 34px; color: #2c3e50; text-align: center; font-weight: bold; margin-bottom: 15px;">
+            Model Details and Result
+          </h2>
+
+
+          <!-- Tabs -->
+          <div class="tabs">
+            <button class="tab active" onclick="openTab(event, 'description')">Description</button>
+            <button class="tab" onclick="openTab(event, 'details')">Model Details</button>
+            <button class="tab" onclick="openTab(event, 'recommendation')">Recommendation</button>
+            <button class="tab" onclick="openTab(event, 'specialist')">Find Specialist</button>
+          </div>
+
+          <!-- Tab Content -->
+          <div id="description" class="tab-content active">
+            <div class="content-grid">
+              <div class="image-box">
+                {% if predicted_result == "Left Bundle Branch Block" %}
+                  <img src="{% static "images/Left_BundleH.png" %}" alt="ECG INterpretation Diagram">
+
+                {% elif predicted_result == "Normal" %}
+                  <img src="{% static "images/NormalH.png" %}" alt="ECG INterpretation Diagram">
+
+                {% elif predicted_result == "Premature Atrial Contraction" %}
+                  <img src="{% static "images/Premature_AtrialH.png" %}" alt="ECG INterpretation Diagram">
+
+                {% elif predicted_result == "Premature Ventricular Contractions" %}
+                  <img src="{% static "images/Premature_VentricularH.png" %}" alt="ECG INterpretation Diagram">
+
+                {% elif predicted_result == "Right Bundle Branch Block" %}
+                  <img src="{% static "images/Right_BundleH.png" %}" alt="ECG INterpretation Diagram">
+
+                {% elif predicted_result == "Ventricular Fibrillation" %}
+                  <img src="{% static "images/Ventricular_FibrillationH.png" %}" alt="ECG INterpretation Diagram">
+
+                {% endif %}
+              </div>
+              <div class="text-box" style="padding-left: 30px;">
+                {% if predicted_result == "Left Bundle Branch Block" %}
+                  <h3>Left Bundle Branch Block (LBBB)</h3>
+                  <p>
+                    Left Bundle Branch Block occurs when there is a delay or blockage in the electrical impulses traveling through the left bundle branch of the heart’s conduction system. This condition alters the normal sequence of ventricular activation, causing the left ventricle to contract later than the right ventricle. On an ECG, it typically shows a widened QRS complex and distinct waveform patterns, which can help in diagnosis.
+                  </p>
+                  <p>
+                    LBBB can be associated with underlying heart diseases such as hypertension, coronary artery disease, or cardiomyopathy. While some patients may be asymptomatic, others may experience chest pain, shortness of breath, or fainting spells. Early detection is important as it may indicate structural heart problems that need further evaluation and management.
+                  </p>
+
+                {% elif predicted_result == "Normal" %}
+                  <h3>Normal</h3>
+                  <p>
+                    A normal ECG indicates that the heart’s electrical activity is functioning within healthy limits. The P wave, QRS complex, and T wave appear in their usual shape, size, and timing, representing a regular rhythm and normal conduction through the atria and ventricles. This shows that the heart is pumping efficiently and delivering oxygen-rich blood throughout the body.
+                  </p>
+                  <p>
+                    Even though a normal ECG suggests good heart health at the time of recording, it does not completely rule out all heart conditions. Some issues may not be present during the test or may require additional investigations. However, it provides reassurance and serves as a baseline for comparing future readings.
+                  </p>
+
+                {% elif predicted_result == "Premature Atrial Contraction" %}
+                  <h3>Premature Atrial Contraction (PAC)</h3>
+                  <p>
+                    Premature Atrial Contractions are early heartbeats originating from the atria before the normal heartbeat occurs. These extra beats disrupt the heart’s rhythm temporarily and are often seen as irregularities on the ECG. PACs may occur occasionally in healthy individuals or may be linked to stress, caffeine, alcohol, or underlying heart conditions.
+                  </p>
+                  <p>
+                    Most PACs are harmless and do not require treatment, especially if they occur infrequently. However, frequent PACs may be associated with atrial fibrillation or other arrhythmias. Identifying PACs on an ECG helps in monitoring and preventing complications in patients with risk factors.
+                  </p>
+
+                {% elif predicted_result == "Premature Ventricular Contractions" %}
+                  <h3>Premature Ventricular Contractions (PVCs)</h3>
+                  <p>
+                    Premature Ventricular Contractions are extra heartbeats that begin in the ventricles and occur earlier than the next expected heartbeat. On an ECG, they appear as wide and abnormal QRS complexes. PVCs can be occasional and benign, especially in healthy individuals, or frequent and linked to heart disease, electrolyte imbalance, or medication effects.
+                  </p>
+                  <p>
+                    Some patients may feel PVCs as skipped beats, palpitations, or chest discomfort. While occasional PVCs are generally not dangerous, frequent PVCs may increase the risk of arrhythmias or weakened heart function. Identifying PVCs on ECG is important to determine whether further tests or treatment are needed.
+                  </p>
+
+                {% elif predicted_result == "Right Bundle Branch Block" %}
+                  <h3>Right Bundle Branch Block (RBBB)</h3>
+                  <p>
+                    Right Bundle Branch Block occurs when the electrical conduction is slowed or blocked along the right bundle branch, delaying the activation of the right ventricle. On an ECG, this condition typically shows as a widened QRS complex with characteristic “rabbit ear” patterns in certain leads.
+                  </p>
+                  <p>
+                    RBBB can be seen in both healthy individuals and in association with heart disease such as congenital heart defects, pulmonary embolism, or myocardial infarction. While it may not always cause symptoms, its presence can indicate underlying cardiac or pulmonary issues that should be evaluated further.
+                  </p>
+
+                {% elif predicted_result == "Ventricular Fibrillation" %}
+                  <h3>Ventricular Fibrillation (VFib)</h3>
+                  <p>
+                    Ventricular Fibrillation is a life-threatening arrhythmia where the ventricles quiver instead of contracting effectively, leading to no effective blood circulation. On an ECG, VFib appears as chaotic, irregular electrical activity without recognizable P waves, QRS complexes, or T waves. This condition requires immediate medical attention.
+                  </p>
+                  <p>
+                    Without prompt treatment, usually defibrillation and advanced cardiac life support, VFib leads to sudden cardiac arrest and death. Identifying this condition quickly is critical for survival. Continuous monitoring and preventive treatment may be required for individuals at risk of recurrent VFib.
+                  </p>
+
+                {% else %}
+                  <h3>No Result Found</h3>
+                  <p>
+                    The ECG interpretation did not match any known condition in the system. Please try again or consult a cardiologist for further analysis.
+                  </p>
+                {% endif %}
+                <a href="{% url 'detection' %}"><button class="detect-btn">Detect again</button></a>
+              </div>
+            </div>
+          </div>
+
+          <div id="details" class="tab-content">
+            <div class="content-grid">
+              <div class="image-box">
+                {% if predicted_result == "Left Bundle Branch Block" %}
+                  <img src="{% static "images/Left_BundleH.png" %}" alt="ECG INterpretation Diagram">
+
+                {% elif predicted_result == "Normal" %}
+                  <img src="{% static "images/NormalH.png" %}" alt="ECG INterpretation Diagram">
+
+                {% elif predicted_result == "Premature Atrial Contraction" %}
+                  <img src="{% static "images/Premature_AtrialH.png" %}" alt="ECG INterpretation Diagram">
+
+                {% elif predicted_result == "Premature Ventricular Contractions" %}
+                  <img src="{% static "images/Premature_VentricularH.png" %}" alt="ECG INterpretation Diagram">
+
+                {% elif predicted_result == "Right Bundle Branch Block" %}
+                  <img src="{% static "images/Right_BundleH.png" %}" alt="ECG INterpretation Diagram">
+
+                {% elif predicted_result == "Ventricular Fibrillation" %}
+                  <img src="{% static "images/Ventricular_FibrillationH.png" %}" alt="ECG INterpretation Diagram">
+
+                {% endif %}
+              </div>
+              <div class="text-box">
+                <div class="model-details-container">
+                    <h1>Model Details</h1>
+                    <div class="card-wrapper">
+                        <div class="info-card model-name-card">
+                            <p class="card-title">Model:</p>
+                            <p class="card-value" style="font-size: 20px;">{{model_name}}</p>
+                        </div>
+                        <div class="info-card model-accuracy-card">
+                            <p class="card-title">Model Accuracy:</p>
+                            <p class="card-value" style="font-size: 20px;">{{model_accuracy}}%</p>
+                        </div>
+                    </div>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+
+          <div id="recommendation" class="tab-content">
+            <div class="content-grid">
+              <div class="image-box">
+                {% if predicted_result == "Left Bundle Branch Block" %}
+                  <img src="{% static "images/Left_BundleH.png" %}" alt="ECG INterpretation Diagram">
+
+                {% elif predicted_result == "Normal" %}
+                  <img src="{% static "images/NormalH.png" %}" alt="ECG INterpretation Diagram">
+
+                {% elif predicted_result == "Premature Atrial Contraction" %}
+                  <img src="{% static "images/Premature_AtrialH.png" %}" alt="ECG INterpretation Diagram">
+
+                {% elif predicted_result == "Premature Ventricular Contractions" %}
+                  <img src="{% static "images/Premature_VentricularH.png" %}" alt="ECG INterpretation Diagram">
+
+                {% elif predicted_result == "Right Bundle Branch Block" %}
+                  <img src="{% static "images/Right_BundleH.png" %}" alt="ECG INterpretation Diagram">
+
+                {% elif predicted_result == "Ventricular Fibrillation" %}
+                  <img src="{% static "images/Ventricular_FibrillationH.png" %}" alt="ECG INterpretation Diagram">
+
+                {% endif %}
+              </div>
+              <div class="text-box">
+                <div class="treatment-plan-container">
+                  {% if predicted_result == "Normal" %}
+                  <div class="treatment-card recommended-treatment-card">
+                    <p>
+                      <strong>Recommended Treatment:</strong> No treatment needed. Maintain a healthy lifestyle with regular exercise, balanced diet, and routine check-ups.
+                    </p>
+                  </div>
+
+                  <div class="treatment-card next-steps-card">
+                    <p><strong>Next Steps:</strong></p>
+                    <ul>
+                      <li>Continue regular heart-healthy practices.</li>
+                      <li>Follow up with routine annual check-ups.</li>
+                      <li>Avoid smoking, excessive alcohol, and high-stress activities.</li>
+                    </ul>
+                  </div>
+
+                  {% elif predicted_result == "Left Bundle Branch Block" %}
+                  <h6>Trearment Plan for {{predicted_result}}</h6>
+                  <div class="treatment-card recommended-treatment-card">
+                    <p>
+                      <strong>Recommended Treatment:</strong> Management depends on symptoms and underlying heart disease. Some cases require pacemaker implantation.
+                    </p>
+                  </div>
+
+                  <div class="treatment-card next-steps-card">
+                    <p><strong>Next Steps:</strong></p>
+                    <ul>
+                      <li>Consult a cardiologist immediately.</li>
+                      <li>Get an echocardiogram and cardiac MRI to evaluate heart function.</li>
+                      <li>Monitor for symptoms like dizziness, chest pain, or fainting.</li>
+                      <li>Follow prescribed medications for blood pressure/heart failure.</li>
+                    </ul>
+                  </div>
+
+                  {% elif predicted_result == "Premature Atrial Contraction" %}
+                  <h6>Trearment Plan for {{predicted_result}}</h6>
+                  <div class="treatment-card recommended-treatment-card">
+                    <p>
+                      <strong>Recommended Treatment:</strong> Usually benign and may not need treatment. Lifestyle modification and reducing stimulants can help.
+                    </p>
+                  </div>
+
+                  <div class="treatment-card next-steps-card">
+                    <p><strong>Next Steps:</strong></p>
+                    <ul>
+                      <li>Limit caffeine, alcohol, and stress.</li>
+                      <li>Get an ECG and Holter monitoring if episodes are frequent.</li>
+                      <li>Consult a cardiologist if symptoms persist or worsen.</li>
+                    </ul>
+                  </div>
+
+                  {% elif predicted_result == "Premature Ventricular Contractions" %}
+                  <h6>Trearment Plan for {{predicted_result}}</h6>
+                  <div class="treatment-card recommended-treatment-card">
+                    <p>
+                      <strong>Recommended Treatment:</strong> May require beta-blockers or antiarrhythmic drugs if symptomatic or frequent. Otherwise, reassurance and monitoring.
+                    </p>
+                  </div>
+
+                  <div class="treatment-card next-steps-card">
+                    <p><strong>Next Steps:</strong></p>
+                    <ul>
+                      <li>Avoid stimulants (caffeine, nicotine, alcohol).</li>
+                      <li>Perform an echocardiogram to check heart structure.</li>
+                      <li>Consider Holter monitoring to assess PVC burden.</li>
+                      <li>Consult a cardiologist if palpitations worsen.</li>
+                    </ul>
+                  </div>
+
+                  {% elif predicted_result == "Right Bundle Branch Block" %}
+                  <h6>Trearment Plan for {{predicted_result}}</h6>
+                  <div class="treatment-card recommended-treatment-card">
+                    <p>
+                      <strong>Recommended Treatment:</strong> Often benign but may indicate underlying heart or lung disease. Treat underlying cause if present.
+                    </p>
+                  </div>
+
+                  <div class="treatment-card next-steps-card">
+                    <p><strong>Next Steps:</strong></p>
+                    <ul>
+                      <li>Consult a cardiologist for evaluation.</li>
+                      <li>Get echocardiogram and chest X-ray.</li>
+                      <li>Monitor symptoms like shortness of breath, chest pain, or fainting.</li>
+                    </ul>
+                  </div>
+
+                  {% elif predicted_result == "Ventricular Fibrillation" %}
+                  <h6>Trearment Plan for {{predicted_result}}</h6>
+                  <div class="treatment-card recommended-treatment-card">
+                    <p>
+                      <strong>Recommended Treatment:</strong> This is a life-threatening emergency. Requires immediate CPR and defibrillation.
+                    </p>
+                  </div>
+
+                  <div class="treatment-card next-steps-card">
+                    <p><strong>Next Steps:</strong></p>
+                    <ul>
+                      <li>Call emergency medical services immediately.</li>
+                      <li>Start CPR if patient is unresponsive.</li>
+                      <li>Use a defibrillator (AED) as soon as possible.</li>
+                      <li>Hospital treatment includes advanced cardiac life support and possible ICD placement.</li>
+                    </ul>
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="specialist" class="tab-content">
+            <div class="content-grid">
+              
+              <div class="text-box">
+                <div class="specialist-finder-container">
+          <h1>Find Specialist</h1>
+          <p class="subtitle">Search for a Cardiologist in your city.</p>
+
+          <div class="specialist-card-wrapper">
+              <div class="specialist-card">
+                  <div class="image-placeholder">
+                      <img src="https://imagesx.practo.com/providers/dr-venkata-vijay-cardiologist-hyderabad-1f820de1-d2bd-4994-b16a-8eb685f7ddb0.jpg?i_type=t_70x70-2x-webp" alt="Dr Chennamchetty Vijay Kumar">
+                  </div>
+                  <h2 class="doctor-name">Dr. Venkata Vijay</h2>
+                  <p class="specialty">Cardio Thoracic Surgeon</p>
+                  
+                  <div class="contact-info">
+                      <p class="location">
+                          <i class="fas fa-map-marker-alt" ></i>
+                          Virinchi Hospitals, Banjara Hills, Hyderabad
+                      </p>
+                      <p class="phone">
+                          <i class="fas fa-phone"></i> +91 4049170737
+                      </p>
+                      <a href="https://www.practo.com/hyderabad/doctor/dr-venkata-vijay-cardiologist?practice_id=1138784&specialization=Cardiologist&referrer=doctor_listing&page_uid=f7b32386-6ca4-4791-a6e3-6e83fc7bfbc2"><button class="detect-btn">Book Appointment</button></a>
+                  </div>
+              </div>
+
+        <div class="specialist-card">
+            <div class="image-placeholder">
+                <img src="https://imagesx.practo.com/providers/dr-anil-krishna-gundala-interventional-cardiologist-hyderabad-63ca3112-04c4-42f2-ad47-7b49b016175b.jpg?i_type=t_70x70-2x-webp" alt="Dr Balasubramoniam K R">
+            </div>
+            <h2 class="doctor-name">Dr. Anil Krishna</h2>
+            <p class="specialty">Cardiologist specialist Surgeon</p>
+            
+            <div class="contact-info">
+                <p class="location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    Medicover Hospitals - Hitech City, Hyderabad
+                </p>
+                <p class="phone">
+                    <i class="fas fa-phone"></i>
+                    +91 4049172964
+                </p>
+                <a href="https://www.practo.com/hyderabad/doctor/dr-anil-krishnagundala-cardiologist?practice_id=1154495&specialization=Cardiologist&referrer=doctor_listing&page_uid=f7b32386-6ca4-4791-a6e3-6e83fc7bfbc2"><button class="detect-btn">Book Appointment</button></a>
+            </div>
+        </div>
+
+        <div class="specialist-card">
+            <div class="image-placeholder">
+                <img src="https://imagesx.practo.com/providers/dr-krishna-prasad-a-r-cardiothoracic-surgeon-hyderabad-9684f790-1e70-41ff-84be-74364f61cdf2.jpg?i_type=t_70x70-2x-webp" alt="Dr. Qamar Hussain Ansari">
+            </div>
+            <h2 class="doctor-name">Dr. Krishna Prasad</h2>
+            <p class="specialty">Cardiothoracic Surgeon</p>
+            
+            <div class="contact-info">
+                <p class="location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    Medicover Hospitals - Hitech City, Hyderabad
+                </p>
+                <p class="phone">
+                    <i class="fas fa-phone"></i>
+                    +91 4048213517
+                </p>
+                <a href="https://www.practo.com/hyderabad/doctor/dr-rajeshwara-krishna-prasad-adluri-cardiac-surgeon?practice_id=1154495&specialization=Cardiologist&referrer=doctor_listing&page_uid=f7b32386-6ca4-4791-a6e3-6e83fc7bfbc2"><button class="detect-btn">Book Appointment</button></a>
+            </div>
+        </div>
+        
+    </div>
+    
+</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        
+        
+
+
+
+
+
+
+        <div style="margin-top: 80px;"></div>
+        {% comment %} {% if predicted_result == 'Normal' %}
+          <div class="result-green">
+            <div>
+              <span class="result-value">No Abnormality Detected</span>
+            </div>
+            
+          </div>
+        {% elif predicted_result == 'Left Bundle Branch Block' %}
+          <div class="result-red">
+            <div>
+              <span class="result-value">Left Bundle Branch Block</span>
+              <div class="alert alert-danger py-4 rounded-3">
+              ⚠️ <strong>Detected</strong><br />
+            </div>
+            </div>
+            <div>
+              <img src="https://i.vimeocdn.com/video/566990163-97100a6e499f98284290df1e81b9d4fc895b47ec434d52898c1e056048b594c6-d?f=webp" alt="Normal ECG" class="img-fluid rounded shadow-sm" />
+            </div>
+          </div>
+        {% elif predicted_result == 'Premature Atrial Contraction' %}
+          <div class="result-red">
+            <div>
+              <span class="result-value">Premature Atrial Contraction</span>
+              <div class="alert alert-danger py-4 rounded-3">
+              ⚠️ <strong>Detected</strong><br />
+            </div>
+            </div>
+            <div>
+              <img src="{% static "images/NormalH.png" %}" alt="Normal ECG" class="img-fluid rounded shadow-sm" />
+            </div>
+          </div>
+        {% elif predicted_result == 'Premature Ventricular Contractions' %}
+          <div class="result-red">
+            <div>
+              <span class="result-value">Premature Ventricular Contractions</span>
+              <div class="alert alert-danger py-4 rounded-3">
+              ⚠️ <strong>Detected</strong><br />
+            </div>
+            </div>
+            <div>
+              <img src="{% static "images/Premature_Ventricular.png" %}" alt="Normal ECG" class="img-fluid rounded shadow-sm" />
+            </div>
+          </div>
+        {% elif predicted_result == 'Ventricular Fibrillation' %}
+          <div class="result-red">
+            <div>
+              <span class="result-value">Ventricular Fibrillation</span>
+              <div class="alert alert-danger py-4 rounded-3">
+              ⚠️ <strong>Detected</strong><br />
+            </div>
+            </div>
+            <div>
+              <img src="{% static "images/Ventricular_Fibrillation.png" %}" alt="Normal ECG" class="img-fluid rounded shadow-sm" />
+            </div>
+          </div>
+        {% elif predicted_result == 'Right Bundle Branch Block' %}
+          <div class="result-red">
+            <div>
+              <span class="result-value">Right Bundle Branch Block</span>
+              <div class="alert alert-danger py-4 rounded-3">
+              ⚠️ <strong>Detected</strong><br />
+            </div>
+            </div>
+            <div>
+              <img src="https://i.pinimg.com/1200x/70/2c/9e/702c9e8b03aa78e6f743d51b8643b830.jpg" alt="Normal ECG" class="img-fluid rounded shadow-sm" />
+            </div>
+          </div>
+        {% else %}
+          <div class="result-blue">
+            <span class="result-value">No result available</span>
+          </div>
+        {% endif %} {% endcomment %}
+      </div>
+    </div>
+
+
+  </div>
+  <div class="container">
+    
+    <h2 style="font-size: 34px; color: #2c3e50; text-align: center; font-weight: bold; margin-bottom: 15px;">
+      Model Accuracy and Loss Graph
+    </h2>
+    <div class="row justify-content-center g-4">
+      
+      <!-- Accuracy Graph -->
+      <div class="col-md-6 col-sm-12">
+        <div class="graph-card">
+          <div class="graph-title">Model Accuracy</div>
+          <img src="{% static "images/model_accuracy.png" %}" alt="Model Accuracy Graph" class="graph-img img-fluid">
+          
+        </div>
+      </div>
+
+      <!-- Loss Graph -->
+      <div class="col-md-6 col-sm-12">
+        <div class="graph-card">
+          <div class="graph-title">Model Loss</div>
+          <img src="{% static "images/model_loss.png" %}" alt="Model Loss Graph" class="graph-img img-fluid">
+        </div>
+      </div>
+
+    </div>
+  </div>
+  
+
+  <script>
+    function openTab(evt, tabId) {
+      let i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tab-content");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+        tabcontent[i].classList.remove("active");
+      }
+      tablinks = document.getElementsByClassName("tab");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].classList.remove("active");
+      }
+      document.getElementById(tabId).style.display = "block";
+      document.getElementById(tabId).classList.add("active");
+      evt.currentTarget.classList.add("active");
+      }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}
