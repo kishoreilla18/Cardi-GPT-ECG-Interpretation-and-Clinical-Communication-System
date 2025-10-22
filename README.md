@@ -37,7 +37,7 @@ Create a Virtual Environment
 
 bash
 Copy code
-python -m venv venv
+python -m venv venv or virtualenv projectname
 venv\Scripts\activate   # On Windows
 source venv/bin/activate  # On Mac/Linux
 Install Required Packages
